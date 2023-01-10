@@ -1,0 +1,22 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: tongyong;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: 'tongyong';
+  font-style: normal;
+  font-display: swap;
+  src: url(/fonts/tongyong.otf);
+}
+
+* {
+  box-sizing: border-box;
+}

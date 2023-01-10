@@ -1,0 +1,43 @@
+{
+  "name": "newhongqi",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^1.9.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@fontsource/roboto": "^4.5.7",
+    "@mui/icons-material": "^5.8.0",
+    "@mui/material": "^5.8.1",
+    "@supabase/supabase-js": "^1.35.3",
+    "@types/auth0": "^2.35.2",
+    "@types/markdown-it": "^12.2.3",
+    "@types/opencc-js": "^1.0.0",
+    "auth0": "^2.42.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.4",
+    "markdown-it-block-image": "^0.0.3",
+    "markdown-it-for-inline": "^0.1.1",
+    "markdown-it-pangu": "^1.0.2",
+    "next": "12.1.6",
+    "next-pwa": "^5.5.4",
+    "nextjs-google-analytics": "^1.2.1",
+    "opencc-js": "^1.0.4",
+    "react": "^18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.0",
+    "@types/react": "18.0.14",
+    "@types/react-dom": "18.0.5",
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.1.6",
+    "typescript": "4.7.4"
+  }
+}
