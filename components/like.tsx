@@ -1,6 +1,8 @@
 import { Claims } from '@auth0/nextjs-auth0'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import TwitterIcon from '@mui/icons-material/Twitter'
+import LinkIcon from '@mui/icons-material/Link';
 import { Box, IconButton, Typography } from '@mui/material'
 import router from 'next/router'
 import { useEffect, useState } from 'react'
@@ -22,7 +24,7 @@ const ArticleLikes = ({ user, articleId, url }: ArticleLikesProps) => {
             setLikes(res.count ?? 0)
             setLiked(res.liked)
         })
-    }, [])
+    }, [articleId])
 
     const handleLike = () => {
         if (user) {
@@ -34,19 +36,38 @@ const ArticleLikes = ({ user, articleId, url }: ArticleLikesProps) => {
             router.push(`/api/auth/login?redirect=${url}`)
         }
     }
+
+    const copyLink = () => {
+        navigator.clipboard.writeText(url)
+    }
+
     return isNaN(likes)
         ?
         <></>
         : (
-            <Box>
+            <Box sx={{
+                display: 'flex'
+            }}>
                 <br />
                 <IconButton target='_blank' rel='noreferrer' href={`https://twitter.com/compose/tweet?url=${url}`}>
-                    <TwitterIcon />
+                    <TwitterIcon color='primary' />
                 </IconButton>
-                <IconButton onClick={handleLike}>
-                    <ThumbUpIcon htmlColor={liked ? 'pink' : undefined} />
+                <IconButton onClick={copyLink}>
+                    <LinkIcon color='primary' />
                 </IconButton>
-                <Typography variant='caption'>{likes}</Typography>
+                <Box flexGrow={1}></Box>
+                <Box>
+                    <IconButton onClick={handleLike}>
+                        {
+                            liked
+                                ?
+                                <FavoriteIcon color='primary' />
+                                :
+                                <FavoriteBorderIcon color='primary' />
+                        }
+                    </IconButton>
+                    <Typography variant='caption' sx={{ fontWeight: 'bolder' }}>{likes}</Typography>
+                </Box>
             </Box>
         )
 }

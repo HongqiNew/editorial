@@ -22,11 +22,11 @@ const Layout = ({ children, title, description, cover }: LayoutProps) => {
                     component='main'
                     sx={{
                         width: '100%',
-                        minHeight: 'calc(100vh - 76px)'
+                        minHeight: 'calc(100vh - 78px)',
                     }}
                 >
                     <Box sx={{
-                        minHeight: 'calc(100vh - 76px)'
+                        minHeight: 'calc(100vh - 78px)'
                     }}>
                         <Toolbar></Toolbar>
                         <br></br>

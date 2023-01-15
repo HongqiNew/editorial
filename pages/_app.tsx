@@ -12,44 +12,50 @@ import { ThemeProvider } from '@emotion/react'
 import { useMediaQuery, createTheme } from '@mui/material'
 import LayoutBar from '../layout/bar'
 
+export const ColorModeContext = React.createContext('light')
+
 function App({ Component, pageProps }: AppProps) {
-  const [isDarkModeButtonEnabled, setIsDarkModeButtonEnabled] = useState(undefined)
-  // 是否开启按钮
-  const isSystemDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)')
-  // 是否开启系统
-  const [shouldBeDarkMode, setShouldBeDarkMode] = useState(isSystemDarkModeEnabled)
-  // 是否应该开启夜间模式
-  useEffect(() => {
-    setShouldBeDarkMode(isDarkModeButtonEnabled ?? isSystemDarkModeEnabled)
-    // 如果用户没有设置，则使用系统设置。
-  }, [isDarkModeButtonEnabled, isSystemDarkModeEnabled])
+  const [mode, setMode] = React.useState<'light' | 'dark'>(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  )
   const theme = useMemo(() => (
     createTheme({
       typography: {
         fontFamily: 'tongyong',
       },
       palette: {
-        mode: shouldBeDarkMode ? 'dark' : 'light',
+        mode,
         primary: {
-          light: '#ff7961',
-          main: '#f44336',
-          dark: '#ba000d',
+          main: 'rgb(176,26,1)',
           contrastText: '#000',
+        },
+        divider: 'grey',
+        background: {
+          default: mode === 'dark' ? 'rgb(20,20,20)' : 'rgb(245,245,245)',
+          paper: mode === 'dark' ? 'black' : 'white'
         },
       },
     })
   ),
-    [shouldBeDarkMode],
+    [mode],
   )
 
   return (
     <UserProvider>
-      <ThemeProvider theme={theme}>
-        <GoogleAnalytics />
-        <LayoutLoading></LayoutLoading>
-        <LayoutBar setDark={setIsDarkModeButtonEnabled}></LayoutBar>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <ColorModeContext.Provider value={mode}>
+        <ThemeProvider theme={theme}>
+          <GoogleAnalytics />
+          <LayoutLoading></LayoutLoading>
+          <LayoutBar toggle={colorMode.toggleColorMode}></LayoutBar>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ColorModeContext.Provider>
     </UserProvider>
   )
 }

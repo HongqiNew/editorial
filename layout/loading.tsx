@@ -11,7 +11,7 @@ const LayoutLoading = () => {
     }, [])
     return (
         <Box sx={{ position: 'fixed', top: 0, width: '100%' }}>
-            <LinearProgress sx={{ display: isLoading ? undefined : 'none' }} color='warning' />
+            <LinearProgress sx={{ display: isLoading ? undefined : 'none' }} color='primary' />
             <br></br>
         </Box>
     )

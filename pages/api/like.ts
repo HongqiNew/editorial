@@ -5,7 +5,7 @@ import supabaseAdmin from './utils/_supabaseClient'
 export default withApiAuthRequired(async (req, res) => {
     const article: string = req.body.articleId
     
-    const user = (await getSession(req, res))!.user
+    const user = getSession(req, res)!.user
     const option = {
         article,
         user_id: splitId(user.sub),

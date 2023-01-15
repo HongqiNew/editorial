@@ -1,7 +1,8 @@
-import { Alert, Snackbar, Typography, TextField, IconButton } from '@mui/material'
-import React, { useEffect } from 'react'
+import { Alert, Snackbar, Typography, IconButton, Box, Link } from '@mui/material'
+import React, { useContext, useEffect } from 'react'
 import SendIcon from '@mui/icons-material/Send'
 import post from '../utils/api'
+import { ColorModeContext } from '../pages/_app'
 
 type CommentInputProps = {
     errorChecker?: (value: string) => boolean
@@ -16,12 +17,12 @@ const CommentInput = (props: CommentInputProps) => {
     const [isDisabled, setIsDisabled] = React.useState(false)
     useEffect(() => {
         setIsDisabled(props.errorChecker ? props.errorChecker(props.value) : false)
-    }, [])
+    }, [props])
 
     const [open, setOpen] = React.useState(false)
     const [success, setSuccess] = React.useState(false)
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = event.target.value
         props.setValue(value)
         setIsDisabled(props.errorChecker ? props.errorChecker(value) : false)
@@ -48,28 +49,60 @@ const CommentInput = (props: CommentInputProps) => {
         }
     }
 
+    const mode = useContext(ColorModeContext)
+    console.log({ mode })
+
     return (
         <>
             <Typography color='#7d7d7d'>
                 {props.description}
             </Typography>
-            <TextField
-                {...props}
-                variant='filled'
-                fullWidth
-                multiline
-                value={props.value}
-                onChange={handleChange}
-            />
-            <IconButton sx={{ float: 'right' }} onClick={send} disabled={isDisabled ? true : false}><SendIcon></SendIcon></IconButton>
+            <Box
+                sx={{
+                    backgroundColor: mode === 'dark' ? 'black' : 'white',
+                    width: '100%',
+                    borderRadius: 3,
+                    p: '5px 5px 5px 5px'
+                }}
+            >
+                <textarea
+                    {...props}
+                    style={{
+                        backgroundColor: 'transparent',
+                        width: '100%',
+                        height: 100,
+                        resize: 'none',
+                        fontSize: 15,
+                        border: 'none',
+                        outline: 'none',
+                    }}
+                    value={props.value}
+                    onChange={handleChange}
+                >
+                </textarea>
+            </Box>
+            <Box sx={{
+                display: 'flex',
+            }}>
+                <Typography sx={{ opacity: 0.5 }}>
+                    对本文评论请使用 <Link href='/art/2' target='_blank' rel='noreferrer'>Markdown</Link> 语法。如果你不知道什么是 Markdown，请直接键入你的评论即可。<Link href='https://pandao.github.io/editor.md/' target='_blank' rel='noreferrer'>这里</Link>有一个在线 Markdown 编辑器，它的界面有中文翻译且完全<Link href='https://github.com/pandao/editor.md' target='_blank' rel='noreferrer'>开源</Link>。
+                </Typography>
+                <Box sx={{ width: '50%' }}></Box>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <IconButton sx={{ float: 'right' }} onClick={send} disabled={isDisabled ? true : false}><SendIcon color='primary'></SendIcon></IconButton>
+                </Box>
+            </Box>
+
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={
                     success ? 'success' : 'error'
                 } sx={{ width: '100%' }}>
-                    {success ? '已经送出。' : '失败了。'}
+                    {success ? '已发布。' : '失败了。'}
                 </Alert>
             </Snackbar>
-            <br></br><br></br>
         </>
     )
 }

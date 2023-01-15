@@ -1,7 +1,7 @@
 import { Claims } from '@auth0/nextjs-auth0'
-import { Button, Paper, IconButton, Typography, Link } from '@mui/material'
+import { Button, Paper, IconButton, Typography } from '@mui/material'
 import styles from '../styles/Typo.module.css'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import post, { get } from '../utils/api'
 import markdown, { makeMarkdownLinkUseRouterPush } from '../utils/md'
 import CommentInput from './input'
@@ -38,6 +38,8 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
             makeMarkdownLinkUseRouterPush()
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { loadComments() }, [articleId])
 
     const replyComment = (text: string) => {
         const quote = text.split('\n').map((line) => `> ${line}`).join('\n')
@@ -55,16 +57,12 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
                 user
                     ?
                     <CommentInput
-                        label='评论'
                         rows={5}
                         value={userComment}
                         setValue={setUserComment}
                         url={`/api/comment`}
                         errorChecker={value => value.length === 0}
-                        placeholder='纯文本也属于 Markdown。'
-                        description={<>
-                            对本文评论请使用 <Link href='/art/2' target='_blank' rel='noreferrer'>Markdown</Link> 语法。如果你不知道什么是 Markdown，请直接键入你的评论即可。<Link href='https://pandao.github.io/editor.md/' target='_blank' rel='noreferrer'>这里</Link>有一个在线 Markdown 编辑器，它的界面有中文翻译且完全<Link href='https://github.com/pandao/editor.md' target='_blank' rel='noreferrer'>开源</Link>。
-                        </>}
+                        placeholder='可直接发送纯文本。'
                         body={{
                             articleId
                         }}>
@@ -74,22 +72,22 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
             }
             <br></br>
             <br></br>
-            <Button variant='outlined' color={hasCommentsLoaded ? 'secondary' : 'primary'} fullWidth onClick={loadComments}>
-                {hasCommentsLoaded ? '刷新评论' : '加载评论'}
+            <Button variant='outlined' color='primary' disabled={!hasCommentsLoaded} fullWidth onClick={loadComments}>
+                {hasCommentsLoaded ? '刷新评论' : '评论加载中……'}
             </Button>
             {
                 comments.map((comment, index) => (
-                    <Paper elevation={3} key={index} className={styles.typo} sx={{
+                    <Paper elevation={0} key={index} className={styles.typo} sx={{
                         padding: '10px 10px 0 10px',
                         whiteSpace: 'pre-line',
                         position: 'relative',
                         marginTop: 4,
                     }}>
-                        <IconButton sx={{ position: 'absolute', right: 0, top: 0 }} onClick={() => replyComment(comment.text)}><ReplyIcon /></IconButton>
+                        <IconButton color='primary' sx={{ position: 'absolute', right: 0, top: 0 }} onClick={() => replyComment(comment.text)}><ReplyIcon /></IconButton>
                         {
                             comment.isMe
                                 ?
-                                <IconButton sx={{ position: 'absolute', right: 40, top: 0 }} onClick={() => deleteComment(comment.id)}><DeleteIcon /></IconButton>
+                                <IconButton color='primary' sx={{ position: 'absolute', right: 40, top: 0 }} onClick={() => deleteComment(comment.id)}><DeleteIcon /></IconButton>
                                 :
                                 <></>
                         }

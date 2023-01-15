@@ -6,7 +6,7 @@ export default withApiAuthRequired(async (req, res) => {
     const text: string = req.body.value
     const article: string = req.body.articleId
     
-    const user = (await getSession(req, res))!.user
+    const user = getSession(req, res)!.user
     if (!text || text === '') {
         res.status(400).json({ success: false })
         return

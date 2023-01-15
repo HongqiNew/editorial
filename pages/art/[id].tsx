@@ -31,6 +31,7 @@ const Art = ({ article, user, url }: ArtProps) => {
         setText(text => chineseConverter(text, isSimp))
         setIsSimp(isSimp => !isSimp)
     }
+
     return (
         <Layout title={article.title} description={text} cover={article.cover}>
             <Box sx={{
@@ -38,24 +39,26 @@ const Art = ({ article, user, url }: ArtProps) => {
                 mr: { xs: '12%', sm: '18%', md: '20%' }
             }}>
                 <Fab onClick={convert} variant='extended' sx={{
-                    position:'fixed',
-                    top:'85px',
-                    right:'10px',
+                    position: 'fixed',
+                    top: '85px',
+                    right: '10px',
                     opacity: 0.7,
                 }}>
                     <ChangeCircleIcon />
                     {isSimp ? '简➢繁' : '繁➣简'}
                 </Fab>
-                <Typography variant='h4' sx={{
-                    opacity: 0.8
+                <Typography variant='h3' sx={{
+                    opacity: 0.8,
+                    fontWeight: 'bolder'
                 }}>
                     {article.title}
                 </Typography>
                 <Typography variant='caption'>
-                    本文约在 {article.md.length} 字以下，阅读时间需要约 {Math.ceil(article.md.length / 512)} 分钟。
+                    本文约在 {Math.ceil(article.md.length * 0.9 - (article.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(article.md.length / 600)} 分钟。
                 </Typography>
                 <Typography sx={{
                     whiteSpace: 'pre-line',
+                    fontWeight: 'bolder'
                 }}>
                     作者： {article.author}<br></br>
                     日期： {new Date(article.time).toLocaleDateString()}
@@ -63,15 +66,18 @@ const Art = ({ article, user, url }: ArtProps) => {
                 {
                     article.tags
                         ?
-                        <>
+                        <Box sx={{
+                            fontWeight: 'bolder'
+                        }}>
                             标签：{article.tags.map((tag) => (
                                 <Chip
+                                    sx={{ mr: 1 }}
                                     onClick={() => router.push(`/tag/${tag}`)}
                                     label={`#${tag}`}
                                     key={tag}
                                 ></Chip>
                             ))}
-                        </>
+                        </Box>
                         :
                         <></>
                 }
@@ -79,7 +85,7 @@ const Art = ({ article, user, url }: ArtProps) => {
                     className={styles.typo}
                     dangerouslySetInnerHTML={{ __html: text }}
                 ></div>
-                <Divider sx={{ boxShadow: '3px 3px 3px black' }}></Divider>
+                <Divider></Divider>
                 <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
                 <br></br>
                 <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
@@ -100,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     return article ? {
         props: {
             article,
-            user: (await getSession(ctx.req, ctx.res))?.user ?? null, // undefined 不可序列化
+            user: getSession(ctx.req, ctx.res)?.user ?? null, // undefined 不可序列化
             url: `https://${ctx.req.headers.host}${ctx.resolvedUrl}`
         }
     }

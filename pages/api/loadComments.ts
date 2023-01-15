@@ -19,7 +19,7 @@ const loadComments = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(500).json({ success: false })
     }
     else {
-        const session = await getSession(req, res)
+        const session = getSession(req, res)
         res.status(200).json(data.map((comment) => ({
             ...comment,
             time: new Date(comment.created_at).getTime(), // 创建时间转 Javascript 时间戳

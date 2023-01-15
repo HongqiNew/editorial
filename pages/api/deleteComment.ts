@@ -5,7 +5,7 @@ import supabaseAdmin from './utils/_supabaseClient'
 export default withApiAuthRequired(async (req, res) => {
     const id: string = req.body.id
     
-    const user = (await getSession(req, res))!.user
+    const user = getSession(req, res)!.user
     const option = {
         id,
         user_id: splitId(user.sub), // 只能删除自己的评论

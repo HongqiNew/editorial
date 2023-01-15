@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useUser } from '@auth0/nextjs-auth0'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, useTheme } from '@mui/material'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar } from '@mui/material'
+import React, { useContext, useState } from 'react'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import WestIcon from '@mui/icons-material/West'
@@ -10,16 +10,17 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Link from 'next/link'
 import LayoutSearch from './search'
 import router from 'next/router'
+import { ColorModeContext } from '../pages/_app'
 
 type LayoutBarProps = {
-    setDark: Dispatch<SetStateAction<any>>
+    toggle: () => void
 }
 
 const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
 
-const LayoutBar = ({ setDark }: LayoutBarProps) => {
+const LayoutBar = ({ toggle }: LayoutBarProps) => {
     const user = useUser().user
-    const theme = useTheme()
+    const mode = useContext(ColorModeContext)
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const redirect = (tag: string) => {
@@ -43,7 +44,7 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
         </Box>
     )
 
-    const toggle = () => {
+    const handleMenu = () => {
         setIsMenuOpen(open => !open)
     }
 
@@ -71,8 +72,8 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
                 <IconButton onClick={toggle}>
                     <MenuIcon htmlColor='pink' />
                 </IconButton>
-                <IconButton onClick={() => { setDark((value: any) => !Boolean(value)) }}>
-                    {theme.palette.mode === 'dark' ? <Brightness7Icon htmlColor='pink' /> : <Brightness4Icon htmlColor='pink' />}
+                <IconButton onClick={toggle}>
+                    {mode === 'dark' ? <Brightness7Icon htmlColor='pink' /> : <Brightness4Icon htmlColor='pink' />}
                 </IconButton>
                 <IconButton
                     size='large'
@@ -92,7 +93,7 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
                 </IconButton>
             </Toolbar>
 
-            <Drawer open={isMenuOpen} onClose={toggle} anchor='top'>
+            <Drawer open={isMenuOpen} onClose={handleMenu} anchor='top'>
                 <Menu />
             </Drawer>
         </AppBar>
