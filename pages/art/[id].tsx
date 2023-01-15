@@ -1,17 +1,17 @@
-import { Typography, Box, Divider, Chip, Fab } from "@mui/material";
-import { GetServerSideProps } from "next";
-import Layout from "../../layout";
-import { makeMarkdownLinkUseRouterPush, markdownWithHtml } from "../../utils/md";
+import { Typography, Box, Divider, Chip, Fab } from '@mui/material'
+import { GetServerSideProps } from 'next'
+import Layout from '../../layout'
+import { makeMarkdownLinkUseRouterPush, markdownWithHtml } from '../../utils/md'
 import styles from '../../styles/Typo.module.css'
-import { getSession, Claims } from "@auth0/nextjs-auth0";
-import ArticleComments from "../../components/comments";
-import supabaseAdmin from "../api/utils/_supabaseClient";
-import { Article } from "../../components/art";
-import ArticleLikes from "../../components/like";
-import { useEffect, useState } from "react";
-import router from "next/router";
-import chineseConverter from "../../utils/cnconverter";
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import { getSession, Claims } from '@auth0/nextjs-auth0'
+import ArticleComments from '../../components/comments'
+import supabaseAdmin from '../api/utils/_supabaseClient'
+import { Article } from '../../components/art'
+import ArticleLikes from '../../components/like'
+import { useEffect, useState } from 'react'
+import router from 'next/router'
+import chineseConverter from '../../utils/cnconverter'
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 
 type ArtProps = {
     article: Article
@@ -20,16 +20,16 @@ type ArtProps = {
 }
 
 const Art = ({ article, user, url }: ArtProps) => {
-    const [text, setText] = useState(markdownWithHtml.render(article.md));
+    const [text, setText] = useState(markdownWithHtml.render(article.md))
     useEffect(() => {
         setText(markdownWithHtml.render(article.md)) // 触发重新渲染
-        makeMarkdownLinkUseRouterPush();
-    }, [article]);
+        makeMarkdownLinkUseRouterPush()
+    }, [article])
 
-    const [isSimp, setIsSimp] = useState(true);
+    const [isSimp, setIsSimp] = useState(true)
     const convert = () => {
-        setText(text => chineseConverter(text, isSimp));
-        setIsSimp(isSimp => !isSimp);
+        setText(text => chineseConverter(text, isSimp))
+        setIsSimp(isSimp => !isSimp)
     }
     return (
         <Layout title={article.title} description={text} cover={article.cover}>
@@ -37,7 +37,7 @@ const Art = ({ article, user, url }: ArtProps) => {
                 ml: { xs: '12%', sm: '18%', md: '20%' },
                 mr: { xs: '12%', sm: '18%', md: '20%' }
             }}>
-                <Fab onClick={convert} variant="extended" sx={{
+                <Fab onClick={convert} variant='extended' sx={{
                     position:'fixed',
                     top:'85px',
                     right:'10px',
@@ -90,17 +90,17 @@ const Art = ({ article, user, url }: ArtProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const id = ctx.query.id as string;
+    const id = ctx.query.id as string
     const article = (await supabaseAdmin
         .from('hongqiart')
         .select()
         .eq('id', id)
         .single())
-        .data;
+        .data
     return article ? {
         props: {
             article,
-            user: getSession(ctx.req, ctx.res)?.user ?? null, // undefined 不可序列化
+            user: (await getSession(ctx.req, ctx.res))?.user ?? null, // undefined 不可序列化
             url: `https://${ctx.req.headers.host}${ctx.resolvedUrl}`
         }
     }
@@ -109,4 +109,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         }
 }
 
-export default Art;
+export default Art

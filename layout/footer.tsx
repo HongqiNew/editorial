@@ -1,7 +1,7 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import { Box, IconButton, Typography } from '@mui/material'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import TelegramIcon from '@mui/icons-material/Telegram'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 
 const LayoutFooter = () => {
     return (
@@ -32,4 +32,4 @@ const LayoutFooter = () => {
     )
 }
 
-export default LayoutFooter;
+export default LayoutFooter

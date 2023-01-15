@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
-import ArticlePreview, { Article } from "./art";
-import CollectionPreview, { Collection } from "./col";
+import { Box } from '@mui/material'
+import ArticlePreview, { Article } from './art'
+import CollectionPreview, { Collection } from './col'
 
 type CollectionRowProps = {
     collections: Collection[]
@@ -19,7 +19,7 @@ export const CollectionRow = ({ collections, smMarginRight }: CollectionRowProps
                 ))
             }
         </Box>
-    );
+    )
 }
 
 type ArticleRowProps = {
@@ -38,5 +38,5 @@ export const ArticleRow = ({ articles }: ArticleRowProps) => {
                 ))
             }
         </Box>
-    );
+    )
 }

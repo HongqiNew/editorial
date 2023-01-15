@@ -1,9 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import { GetServerSideProps } from "next";
-import Layout from "../../layout";
-import ArticlePreview, { Article } from "../../components/art";
-import CollectionPreview, { Collection } from "../../components/col";
-import supabaseAdmin from "../api/utils/_supabaseClient";
+import { Box, Typography } from '@mui/material'
+import { GetServerSideProps } from 'next'
+import Layout from '../../layout'
+import ArticlePreview, { Article } from '../../components/art'
+import CollectionPreview, { Collection } from '../../components/col'
+import supabaseAdmin from '../api/utils/_supabaseClient'
 
 type ColProps = {
     collection: Collection
@@ -62,18 +62,18 @@ const Col = ({ collection, articles }: ColProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const id = ctx.query.id as string;
+    const id = ctx.query.id as string
     const collection = (await supabaseAdmin
         .from('hongqicol')
         .select()
         .eq('id', id)
         .single())
-        .data;
+        .data
     // 取回 ID 匹配的一刊
 
-    const articleIds: number[] | null = collection?.articles;
+    const articleIds: number[] | null = collection?.articles
     if (articleIds) {
-        const alone: boolean = collection?.alone; // 是否是单独文章
+        const alone: boolean = collection?.alone // 是否是单独文章
 
         if (alone) {
             // 直接跳转相应文章
@@ -90,9 +90,9 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
             .from('hongqiart')
             .select('id,title,time,author,tags')
             .in('id', articleIds))
-            .data;
+            .data
         // 按在 ID 列表中的顺序排序
-        articles?.sort((a, b) => articleIds.indexOf(a.id) - articleIds.indexOf(b.id));
+        articles?.sort((a, b) => articleIds.indexOf(a.id) - articleIds.indexOf(b.id))
 
         return {
             props: {
@@ -108,4 +108,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
 }
 
-export default Col;
+export default Col

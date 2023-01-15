@@ -1,18 +1,19 @@
-import { Box } from "@mui/material"
-import { GetServerSideProps } from "next"
-import Layout from "../layout"
-import CollectionPreview, { Collection } from "../components/col"
-import { CollectionRow } from "../components/row"
-import supabaseAdmin from "./api/utils/_supabaseClient"
-import Pagination from "../components/pagination"
+import { Box, Pagination, PaginationItem } from '@mui/material'
+import { GetServerSideProps } from 'next'
+import router from 'next/router'
+import CollectionPreview, { Collection } from '../components/col'
+import { CollectionRow } from '../components/row'
+import Layout from '../layout'
+import supabaseAdmin from './api/utils/_supabaseClient'
 
 type HomeProps = {
     collections: Collection[]
     topCollection: Collection
-    pageNum: number
+    page: number
+    pageCount: number
 }
 
-const Home = ({ collections, topCollection, pageNum }: HomeProps) => {
+const Home = ({ collections, topCollection, page, pageCount }: HomeProps) => {
     return (
         <Layout title='主页'>
             <Box sx={{
@@ -29,7 +30,7 @@ const Home = ({ collections, topCollection, pageNum }: HomeProps) => {
                 <CollectionRow collections={collections.filter((value, index) => index % 3 === 1)} />
                 <CollectionRow smMarginRight='0' collections={collections.filter((value, index) => index % 3 === 2)} />
             </Box>
-            
+
             <Box sx={{
                 display: { sm: 'none', xs: 'flex' },
                 flexDirection: 'column',
@@ -38,16 +39,31 @@ const Home = ({ collections, topCollection, pageNum }: HomeProps) => {
                 <CollectionPreview collection={topCollection} />
                 <CollectionRow collections={collections} />
             </Box>
-            <Pagination pageNum={pageNum} />
+            <br></br>
+
+            <Pagination
+                sx={{ display: 'flex', justifyContent: 'center' }}
+                size='large'
+                variant='outlined'
+                color='primary'
+                page={page}
+                count={pageCount}
+                renderItem={(item) => (
+                    <PaginationItem
+                        {...item}
+                        onClick={() => router.push(`?page=${item.page}`)}
+                    />
+                )}
+            ></Pagination>
             <br></br>
         </Layout>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const collectionNumPerPage = 9;
-    const firstCollectionId = 10;
-    const page = ctx.query.page ? parseInt(ctx.query.page as string) : 0;
+    const collectionNumPerPage = 9
+    const firstCollectionId = 10
+    const page = ctx.query.page ? parseInt(ctx.query.page as string) : 0
     // 取回最新刊物 ID
     const lastCollectionId = (await supabaseAdmin
         .from('hongqicol')
@@ -56,8 +72,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         .limit(1)
         .single())
         .data
-        .id;
-    const searchStartId = lastCollectionId - page * collectionNumPerPage;
+        .id
+    const searchStartId = lastCollectionId - page * collectionNumPerPage
 
     // 取回含文章的刊物
     const collectionsDataPromise = supabaseAdmin
@@ -67,30 +83,30 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         .not('id', 'eq', 0)
         .lte('id', searchStartId)
         .order('id', { ascending: false })
-        .limit(collectionNumPerPage);
+        .limit(collectionNumPerPage)
 
     // 取回置顶刊
     const topCollectionDataPromise = supabaseAdmin
         .from('hongqicol')
         .select('id,time,title,preview')
         .eq('id', 0)
-        .single();
+        .single()
 
     // 等待所有 Promise 完成并取出数据
     const [collectionsData, topCollectionData] = await Promise.all([
         collectionsDataPromise,
         topCollectionDataPromise,
-    ]);
-    const collections = collectionsData.data;
-    const topCollection = topCollectionData.data;
+    ])
+    const collections = collectionsData.data
+    const topCollection = topCollectionData.data
 
     // 总页数 = 刊物数 / 每页刊物数（进一）
     // 刊物数 ≈ 最后一刊 ID - 第一刊 ID + 1 （植树问题）
-    const pageNum = Math.ceil((lastCollectionId - firstCollectionId + 1) / collectionNumPerPage);
+    const pageCount = Math.ceil((lastCollectionId - firstCollectionId + 1) / collectionNumPerPage)
 
     return {
-        props: { collections, topCollection, pageNum }
+        props: { collections, topCollection, page, pageCount }
     }
 }
 
-export default Home;
+export default Home

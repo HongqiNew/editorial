@@ -1,28 +1,28 @@
-import MarkdownIt from "markdown-it";
-import MarkdownItAnchor from "markdown-it-anchor";
-import router from "next/router";
+import MarkdownIt from 'markdown-it'
+import MarkdownItAnchor from 'markdown-it-anchor'
+import router from 'next/router'
 
 // 标记 ID，方便识别并附加 onclick 事件
 const MarkdownItLink = (tokens: any, idx: any) => {
-  const hrefIndex = tokens[idx].attrIndex("href");
+  const hrefIndex = tokens[idx].attrIndex('href')
   if (hrefIndex !== -1) {
-    tokens[idx].attrPush(["id", "Markdown Link"]);
+    tokens[idx].attrPush(['id', 'Markdown Link'])
   }
-};
+}
 
 // 遍历链接，在 Markdown 转换的链接中使用 router.push() 跳转，避免重新加载页面
 export const makeMarkdownLinkUseRouterPush = () => {
-  const links = document.links;
+  const links = document.links
   for (let index = 0; index < links.length; index++) {
-    const item = links.item(index);
-    if (item && item.id === "Markdown Link") {
+    const item = links.item(index)
+    if (item && item.id === 'Markdown Link') {
       item.onclick = () => {
-        router.push(item.href);
-        return false;
-      };
+        router.push(item.href)
+        return false
+      }
     }
   }
-};
+}
 
 /**
  * 一律开启 { breaks: true }，通过遇到 \n 转为 <br /> 避免 CSS 中 pre-line 的使用
@@ -35,11 +35,11 @@ export const makeMarkdownLinkUseRouterPush = () => {
 
 const markdown: MarkdownIt = MarkdownIt({ breaks: true })
   .use(
-    require("markdown-it-for-inline"),
-    "url_next",
-    "link_open",
+    require('markdown-it-for-inline'),
+    'url_next',
+    'link_open',
     MarkdownItLink,
-  );
+  )
 
 export const markdownWithHtml: MarkdownIt = MarkdownIt({
   html: true,
@@ -47,14 +47,14 @@ export const markdownWithHtml: MarkdownIt = MarkdownIt({
 })
   .use(MarkdownItAnchor)
   .use(
-    require("markdown-it-for-inline"),
-    "url_next",
-    "link_open",
+    require('markdown-it-for-inline'),
+    'url_next',
+    'link_open',
     MarkdownItLink,
   )
-  .use(require("markdown-it-pangu"))
-  .use(require("markdown-it-block-image"), {
+  .use(require('markdown-it-pangu'))
+  .use(require('markdown-it-block-image'), {
     outputContainer: 'center',
-  });
+  })
 
-export default markdown;
+export default markdown

@@ -1,7 +1,7 @@
-import { Alert, Snackbar, Typography, TextField, IconButton } from "@mui/material"
-import React, { useEffect } from "react"
-import SendIcon from '@mui/icons-material/Send';
-import post from "../utils/api"
+import { Alert, Snackbar, Typography, TextField, IconButton } from '@mui/material'
+import React, { useEffect } from 'react'
+import SendIcon from '@mui/icons-material/Send'
+import post from '../utils/api'
 
 type CommentInputProps = {
     errorChecker?: (value: string) => boolean
@@ -13,38 +13,38 @@ type CommentInputProps = {
 }
 
 const CommentInput = (props: CommentInputProps) => {
-    const [isDisabled, setIsDisabled] = React.useState(false);
+    const [isDisabled, setIsDisabled] = React.useState(false)
     useEffect(() => {
-        setIsDisabled(props.errorChecker ? props.errorChecker(props.value) : false);
-    }, []);
+        setIsDisabled(props.errorChecker ? props.errorChecker(props.value) : false)
+    }, [])
 
-    const [open, setOpen] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
+    const [success, setSuccess] = React.useState(false)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        props.setValue(value);
-        setIsDisabled(props.errorChecker ? props.errorChecker(value) : false);
+        const value = event.target.value
+        props.setValue(value)
+        setIsDisabled(props.errorChecker ? props.errorChecker(value) : false)
     }
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
-            return;
+            return
         }
-        setOpen(false);
-    };
+        setOpen(false)
+    }
 
     const send = async () => {
-        setIsDisabled(true);
-        const success = await post(`${props.url}`, Object.assign({ value: props.value }, props.body));
-        setSuccess(success);
-        setOpen(true);
+        setIsDisabled(true)
+        const success = await post(`${props.url}`, Object.assign({ value: props.value }, props.body))
+        setSuccess(success)
+        setOpen(true)
         if (success) {
-            props.setValue('');
-            setIsDisabled(true);
+            props.setValue('')
+            setIsDisabled(true)
         }
         else {
-            setIsDisabled(false);
+            setIsDisabled(false)
         }
     }
 
@@ -74,4 +74,4 @@ const CommentInput = (props: CommentInputProps) => {
     )
 }
 
-export default CommentInput;
+export default CommentInput

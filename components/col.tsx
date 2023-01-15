@@ -1,5 +1,5 @@
-import { Card, CardActionArea, CardContent, Typography, CardMedia, SxProps, Theme, Link } from "@mui/material";
-import router from "next/router";
+import { Card, CardActionArea, CardContent, Typography, CardMedia, SxProps, Theme, Link } from '@mui/material'
+import router from 'next/router'
 
 export type Collection = {
     id: number
@@ -52,4 +52,4 @@ const CollectionPreview = ({ collection, sx }: CollectionPreviewProps) => {
     )
 }
 
-export default CollectionPreview;
+export default CollectionPreview

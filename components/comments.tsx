@@ -1,12 +1,12 @@
-import { Claims } from "@auth0/nextjs-auth0";
-import { Button, Paper, IconButton, Typography, Link } from "@mui/material";
-import styles from "../styles/Typo.module.css";
-import { Dispatch, SetStateAction, useState } from "react";
-import post, { get } from "../utils/api";
-import markdown, { makeMarkdownLinkUseRouterPush } from "../utils/md";
-import CommentInput from "./input";
-import ReplyIcon from "@mui/icons-material/Reply";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Claims } from '@auth0/nextjs-auth0'
+import { Button, Paper, IconButton, Typography, Link } from '@mui/material'
+import styles from '../styles/Typo.module.css'
+import { Dispatch, SetStateAction, useState } from 'react'
+import post, { get } from '../utils/api'
+import markdown, { makeMarkdownLinkUseRouterPush } from '../utils/md'
+import CommentInput from './input'
+import ReplyIcon from '@mui/icons-material/Reply'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export type Comment = {
     id: string
@@ -26,27 +26,27 @@ type ArticleCommentsProps = {
 
 const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
     const [comments, setComments]: [Comment[] | [], Dispatch<SetStateAction<Comment[] | []>>]
-        = useState(new Array());
-    const [hasCommentsLoaded, setHasCommentsLoaded] = useState(false);
-    const [userComment, setUserComment] = useState('');
+        = useState(new Array())
+    const [hasCommentsLoaded, setHasCommentsLoaded] = useState(false)
+    const [userComment, setUserComment] = useState('')
 
     const loadComments = async () => {
-        setHasCommentsLoaded(true);
-        const data: Comment[] | [] = (await get('/api/loadComments', { articleId })) ?? [];
-        setComments(data);
+        setHasCommentsLoaded(true)
+        const data: Comment[] | [] = (await get('/api/loadComments', { articleId })) ?? []
+        setComments(data)
         setTimeout(() => {
-            makeMarkdownLinkUseRouterPush();
-        });
+            makeMarkdownLinkUseRouterPush()
+        })
     }
 
     const replyComment = (text: string) => {
-        const quote = text.split('\n').map((line) => `> ${line}`).join('\n');
+        const quote = text.split('\n').map((line) => `> ${line}`).join('\n')
         // 在每一行前加上引用符“>”
-        setUserComment(`${quote}\n\n`);
+        setUserComment(`${quote}\n\n`)
     }
     const deleteComment = async (id: string) => {
-        await post('/api/deleteComment', { id });
-        setComments(comments.filter((comment) => comment.id !== id));
+        await post('/api/deleteComment', { id })
+        setComments(comments.filter((comment) => comment.id !== id))
     }
 
     return (
@@ -70,11 +70,11 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
                         }}>
                     </CommentInput>
                     :
-                    <Button variant='outlined' color='error' fullWidth href={`/api/auth/login?redirect=${url}`}>登录以评论</Button>
+                    <Button variant='outlined' color='primary' fullWidth href={`/api/auth/login?redirect=${url}`}>登录以评论</Button>
             }
             <br></br>
             <br></br>
-            <Button variant='outlined' color={hasCommentsLoaded ? 'warning' : 'error'} fullWidth onClick={loadComments}>
+            <Button variant='outlined' color={hasCommentsLoaded ? 'secondary' : 'primary'} fullWidth onClick={loadComments}>
                 {hasCommentsLoaded ? '刷新评论' : '加载评论'}
             </Button>
             {
@@ -110,4 +110,4 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
     )
 }
 
-export default ArticleComments;
+export default ArticleComments

@@ -1,8 +1,8 @@
-import { styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import React, { useState } from 'react';
-import { IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles'
+import InputBase from '@mui/material/InputBase'
+import SearchIcon from '@mui/icons-material/Search'
+import React, { useState } from 'react'
+import { IconButton } from '@mui/material'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -16,7 +16,7 @@ const Search = styled('div')(({ theme }) => ({
     maxWidth: '50%',
     marginLeft: theme.spacing(2.5),
     width: 'auto',
-}));
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'pink',
@@ -25,16 +25,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
     },
-}));
+}))
 
 const LayoutSearch = () => {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('')
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value);
+        setValue(event.target.value)
     }
     const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.code === 'Enter') {
-            window.open(`https://www.google.com/search?q=site:newhongqi.org ${value}`, '_blank');
+            window.open(`https://www.google.com/search?q=site:newhongqi.org ${value}`, '_blank')
         }
     }
     return (
@@ -54,4 +54,4 @@ const LayoutSearch = () => {
     )
 }
 
-export default LayoutSearch;
+export default LayoutSearch

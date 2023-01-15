@@ -1,33 +1,34 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, useTheme } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import WestIcon from '@mui/icons-material/West';
-import MenuIcon from '@mui/icons-material/Menu';
-import Link from "next/link";
-import LayoutSearch from "./search";
-import router from "next/router";
+/* eslint-disable @next/next/no-img-element */
+import { useUser } from '@auth0/nextjs-auth0'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, useTheme } from '@mui/material'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import WestIcon from '@mui/icons-material/West'
+import MenuIcon from '@mui/icons-material/Menu'
+import Link from 'next/link'
+import LayoutSearch from './search'
+import router from 'next/router'
 
 type LayoutBarProps = {
     setDark: Dispatch<SetStateAction<any>>
 }
 
-const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺'];
+const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
 
 const LayoutBar = ({ setDark }: LayoutBarProps) => {
-    const user = useUser().user;
-    const theme = useTheme();
+    const user = useUser().user
+    const theme = useTheme()
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const redirect = (tag: string) => {
         router.push(`/tag/${tag}`)
     }
     const Menu = () => (
         <Box
             sx={{ width: 'auto' }}
-            role="presentation"
+            role='presentation'
             onClick={toggle}
         >
             <List>
@@ -43,7 +44,7 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
     )
 
     const toggle = () => {
-        setIsMenuOpen(open => !open);
+        setIsMenuOpen(open => !open)
     }
 
     return (
@@ -80,7 +81,7 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
                     {
                         user
                             ?
-                            <img src={user.picture as string} style={{
+                            <img src={user.picture as string} alt='avatar' style={{
                                 borderRadius: 50,
                                 maxHeight: 48,
                                 width: 'auto'
@@ -95,7 +96,7 @@ const LayoutBar = ({ setDark }: LayoutBarProps) => {
                 <Menu />
             </Drawer>
         </AppBar>
-    );
+    )
 }
 
-export default LayoutBar;
+export default LayoutBar

@@ -1,9 +1,9 @@
-import supabaseAdmin from "../api/utils/_supabaseClient";
-import { Article } from "../../components/art";
-import Layout from "../../layout";
-import { GetServerSideProps } from "next";
-import { Box } from "@mui/material";
-import { ArticleRow } from "../../components/row";
+import supabaseAdmin from '../api/utils/_supabaseClient'
+import { Article } from '../../components/art'
+import Layout from '../../layout'
+import { GetServerSideProps } from 'next'
+import { Box } from '@mui/material'
+import { ArticleRow } from '../../components/row'
 
 type ArtProps = {
     articles: Article[]
@@ -35,12 +35,12 @@ const Art = ({ articles, tag }: ArtProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const tag = ctx.query.tag as string;
+    const tag = ctx.query.tag as string
     const articles = (await supabaseAdmin
         .from('hongqiart')
         .select()
         .contains('tags', [tag]))
-        .data ?? [];
+        .data ?? []
     return {
         props: {
             articles,
@@ -49,4 +49,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
 }
 
-export default Art;
+export default Art

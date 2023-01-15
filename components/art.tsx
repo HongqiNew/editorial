@@ -1,6 +1,6 @@
-import { Paper, SxProps, Theme, Typography, Chip } from "@mui/material"
-import Link from "next/link"
-import router from "next/router"
+import { Paper, SxProps, Theme, Typography, Chip } from '@mui/material'
+import Link from 'next/link'
+import router from 'next/router'
 
 export type Article = {
     id: number
@@ -51,4 +51,4 @@ const ArticlePreview = ({ article, sx }: ArticlePreviewProps) => {
     )
 }
 
-export default ArticlePreview;
+export default ArticlePreview

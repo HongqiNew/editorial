@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head'
 
 type LayoutHeadProps = {
     title: string
@@ -28,7 +28,7 @@ const LayoutHead = ({ title, cover, description }: LayoutHeadProps) => {
             <link rel='manifest' href='/manifest.json' />
             <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color='#5bbad5' />
             <link rel='shortcut icon' href='/favicon.ico' />
-            <meta name="description" content={description ?? '《新红旗》，二十一世纪汉字文化圈的左翼报刊。为了无产阶级及其伟大事业而前进！'}></meta>
+            <meta name='description' content={description ?? '《新红旗》，二十一世纪汉字文化圈的左翼报刊。为了无产阶级及其伟大事业而前进！'}></meta>
             <meta name='twitter:card' content='summary_large_image' />
             <meta name='twitter:site' content='@newhongqi' />
             <meta name='twitter:title' content={title} />
@@ -38,4 +38,4 @@ const LayoutHead = ({ title, cover, description }: LayoutHeadProps) => {
     )
 }
 
-export default LayoutHead;
+export default LayoutHead

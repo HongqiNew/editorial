@@ -1,7 +1,6 @@
-import { Box, CssBaseline, Toolbar } from "@mui/material";
-import LayoutBanner from "./banner";
-import LayoutFooter from "./footer";
-import LayoutHead from "./head";
+import { Box, CssBaseline, Toolbar } from '@mui/material'
+import LayoutFooter from './footer'
+import LayoutHead from './head'
 
 type LayoutProps = {
     children: React.ReactNode
@@ -29,7 +28,7 @@ const Layout = ({ children, title, description, cover }: LayoutProps) => {
                     <Box sx={{
                         minHeight: 'calc(100vh - 76px)'
                     }}>
-                        <LayoutBanner cover={cover}></LayoutBanner>
+                        <Toolbar></Toolbar>
                         <br></br>
                         {children}
                     </Box>
@@ -37,7 +36,7 @@ const Layout = ({ children, title, description, cover }: LayoutProps) => {
                 </Box>
             </Box>
         </>
-    );
+    )
 }
 
-export default Layout;
+export default Layout
