@@ -5,7 +5,7 @@ import { makeMarkdownLinkUseRouterPush, markdownWithHtml } from '../../utils/md'
 import styles from '../../styles/Typo.module.css'
 import { getSession, Claims } from '@auth0/nextjs-auth0'
 import ArticleComments from '../../components/comments'
-import supabaseAdmin from '../api/utils/_supabaseClient' 
+import supabaseAdmin from '../api/utils/_supabaseClient'
 import ArticleLikes from '../../components/like'
 import { useEffect, useState } from 'react'
 import router from 'next/router'
@@ -34,56 +34,56 @@ const Art = ({ article, user, url }: ArtProps) => {
 
     return (
         <Layout title={article.title} description={text} cover={article.cover}>
-                <Fab onClick={convert} variant='extended' sx={{
-                    position: 'fixed',
-                    top: '85px',
-                    right: '10px',
-                    opacity: 0.7,
-                }}>
-                    <ChangeCircleIcon />
-                    {isSimp ? '简➢繁' : '繁➣简'}
-                </Fab>
-                <Typography variant='h3' sx={{
-                    opacity: 0.8,
-                    fontWeight: 'bolder'
-                }}>
-                    {article.title}
-                </Typography>
-                <Typography variant='caption'>
-                    本文约在 {Math.ceil(article.md.length * 0.9 - (article.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(article.md.length / 600)} 分钟。
-                </Typography>
-                <Typography sx={{
-                    whiteSpace: 'pre-line',
-                    fontWeight: 'bolder'
-                }}>
-                    作者： {article.author}<br></br>
-                    日期： {new Date(article.time).toLocaleDateString()}
-                </Typography>
-                {
-                    article.tags
-                        ?
-                        <Box sx={{
-                            fontWeight: 'bolder'
-                        }}>
-                            标签：{article.tags.map((tag) => (
-                                <Chip
-                                    sx={{ mr: 1 }}
-                                    onClick={() => router.push(`/tag/${tag}`)}
-                                    label={`#${tag}`}
-                                    key={tag}
-                                ></Chip>
-                            ))}
-                        </Box>
-                        :
-                        <></>
-                }
-                <div
-                    className={styles.typo}
-                    dangerouslySetInnerHTML={{ __html: text }}
-                ></div>
-                <Divider></Divider>
-                <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
-                <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
+            <Fab onClick={convert} variant='extended' sx={{
+                position: 'fixed',
+                top: '85px',
+                right: '10px',
+                opacity: 0.7,
+            }}>
+                <ChangeCircleIcon />
+                {isSimp ? '简➢繁' : '繁➣简'}
+            </Fab>
+            <Typography variant='h3' sx={{
+                fontWeight: 'bolder',
+                opacity: 0.9
+            }}>
+                {article.title}
+            </Typography>
+            <Typography variant='caption'>
+                本文约在 {Math.ceil(article.md.length * 0.9 - (article.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(article.md.length / 600)} 分钟。
+            </Typography>
+            <Typography sx={{
+                whiteSpace: 'pre-line',
+                fontWeight: 'bold'
+            }}>
+                作者： {article.author}<br></br>
+                日期： {new Date(article.time).toLocaleDateString()}
+            </Typography>
+            {
+                article.tags
+                    ?
+                    <Box sx={{
+                        fontWeight: 'bold'
+                    }}>
+                        标签：{article.tags.map((tag) => (
+                            <Chip
+                                sx={{ mr: 1 }}
+                                onClick={() => router.push(`/tag/${tag}`)}
+                                label={`#${tag}`}
+                                key={tag}
+                            ></Chip>
+                        ))}
+                    </Box>
+                    :
+                    <></>
+            }
+            <div
+                className={styles.typo}
+                dangerouslySetInnerHTML={{ __html: text }}
+            ></div>
+            <Divider></Divider>
+            <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
+            <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
         </Layout>
     )
 }

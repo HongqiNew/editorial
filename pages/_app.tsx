@@ -11,15 +11,20 @@ import LayoutLoading from '../layout/loading'
 import { ThemeProvider } from '@emotion/react'
 import { useMediaQuery, createTheme } from '@mui/material'
 import LayoutBar from '../layout/bar'
+import { grey } from '@mui/material/colors'
 
 export const ColorModeContext = React.createContext('light')
 
 function App({ Component, pageProps }: AppProps) {
-  const [mode, setMode] = React.useState<'light' | 'dark'>(useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light'
+  const [mode, setMode] = React.useState<'light' | 'dark'>()
+  useEffect(() => {
+    setMode(prefersDarkMode)
+  }, [prefersDarkMode])
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
       },
     }),
     [],
@@ -40,6 +45,9 @@ function App({ Component, pageProps }: AppProps) {
           default: mode === 'dark' ? 'black' : 'rgb(245,245,245)',
           paper: mode === 'dark' ? 'rgb(28,28,28)' : 'white'
         },
+        text: {
+          secondary: mode === 'dark' ? grey[100] : grey[900]
+        }
       },
     })
   ),
@@ -48,7 +56,7 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <UserProvider>
-      <ColorModeContext.Provider value={mode}>
+      <ColorModeContext.Provider value={mode ?? prefersDarkMode}>
         <ThemeProvider theme={theme}>
           <GoogleAnalytics />
           <LayoutLoading></LayoutLoading>

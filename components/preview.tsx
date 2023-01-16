@@ -14,7 +14,7 @@ const Preview = ({ art, sx }: PreviewProps) => {
     }
     return (
         <Card sx={{
-            mb: 5,
+            mb: 3,
             boxShadow: 'none',
             ...sx
         }}>
@@ -31,7 +31,7 @@ const Preview = ({ art, sx }: PreviewProps) => {
                         <></>
                 }
                 <CardContent>
-                    <Typography variant='h6' sx={{ fontWeight: 'bolder' }}>
+                    <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                         {title}
                     </Typography>
                 </CardContent>
