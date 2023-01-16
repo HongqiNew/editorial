@@ -67,7 +67,7 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
                     <WestIcon></WestIcon>
                 </IconButton>
                 <Link href='/'>
-                    <Image width={75} height={28} alt='logo' src={Logo}></Image>
+                    <Image width={75} height={28} quality={90} alt='logo' src={Logo}></Image>
                 </Link>
                 <Box sx={{ flexGrow: 0.6 }} />
                 <LayoutSearch></LayoutSearch>

@@ -4,29 +4,40 @@ import TelegramIcon from '@mui/icons-material/Telegram'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import Image from 'next/image'
 import Logo from './logo.png'
+import Link from 'next/link'
 
 const LayoutFooter = () => {
     return (
         <footer>
             <Box sx={{
                 width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
                 p: '10px 0px',
                 minHeight: 76,
             }}>
-                <Box sx={{ flexGrow: 0.3 }}></Box>
-                <Box sx={{ width: 300 }}>
-                    <Typography variant='body2' sx={{ textAlign: 'center' }}>CC BY-SA 4.0 | tech@newhongqi.org</Typography>
+
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <Typography variant='body2'>
+                        CC BY-SA 4.0<Link href='/art/47' style={{ fontStyle: 'italic', marginRight: 10 }}>关于</Link>
+                        <br></br>
+                        tech@newhongqi.org
+                    </Typography>
                 </Box>
-                <Box sx={{ flexGrow: 0.2 }}></Box>
-                <Box>
+
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
                     <Image alt='logo' src={Logo} height={25} width={60}></Image>
                 </Box>
-                <Box sx={{ flexGrow: 0.2 }}></Box>
+
                 <Box sx={{
-                    width: 300,
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -41,7 +52,7 @@ const LayoutFooter = () => {
                         <TelegramIcon></TelegramIcon>
                     </IconButton>
                 </Box>
-                <Box sx={{ flexGrow: 0.3 }}></Box>
+
             </Box>
         </footer>
     )

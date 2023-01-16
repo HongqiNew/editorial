@@ -12,19 +12,20 @@ import router from 'next/router'
 import chineseConverter from '../../utils/cnconverter'
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import { Article } from '../../utils/types'
+import Image from 'next/image'
 
 type ArtProps = {
-    article: Article
+    art: Article
     user: Claims | null
     url: string
 }
 
-const Art = ({ article, user, url }: ArtProps) => {
-    const [text, setText] = useState(markdownWithHtml.render(article.md))
+const Art = ({ art, user, url }: ArtProps) => {
+    const [text, setText] = useState(markdownWithHtml.render(art.md))
     useEffect(() => {
-        setText(markdownWithHtml.render(article.md)) // 触发重新渲染
+        setText(markdownWithHtml.render(art.md)) // 触发重新渲染
         makeMarkdownLinkUseRouterPush()
-    }, [article])
+    }, [art])
 
     const [isSimp, setIsSimp] = useState(true)
     const convert = () => {
@@ -33,7 +34,7 @@ const Art = ({ article, user, url }: ArtProps) => {
     }
 
     return (
-        <Layout title={article.title} description={text} cover={article.cover}>
+        <Layout title={art.title} description={text} cover={art.cover}>
             <Fab onClick={convert} variant='extended' sx={{
                 position: 'fixed',
                 top: '85px',
@@ -43,29 +44,42 @@ const Art = ({ article, user, url }: ArtProps) => {
                 <ChangeCircleIcon />
                 {isSimp ? '简➢繁' : '繁➣简'}
             </Fab>
+            {
+                art.cover
+                    ?
+                    <Box sx={{ mb: 2, position: 'relative', display: 'grid', width: '100%', height: 250 }}>
+                        <Image style={{ borderRadius: 30, objectFit: 'cover' }} src={art.cover} alt={art.title} fill sizes='
+                            (max-width: 600px) 76vw,
+                            (max-width: 900px) 64vw,
+                            40vw
+                        '></Image>
+                    </Box>
+                    :
+                    <></>
+            }
             <Typography variant='h3' sx={{
                 fontWeight: 'bolder',
                 opacity: 0.9
             }}>
-                {article.title}
+                {art.title}
             </Typography>
             <Typography variant='caption'>
-                本文约在 {Math.ceil(article.md.length * 0.9 - (article.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(article.md.length / 600)} 分钟。
+                本文约在 {Math.ceil(art.md.length * 0.9 - (art.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(art.md.length / 600)} 分钟。
             </Typography>
             <Typography sx={{
                 whiteSpace: 'pre-line',
                 fontWeight: 'bold'
             }}>
-                作者： {article.author}<br></br>
-                日期： {new Date(article.time).toLocaleDateString()}
+                作者： {art.author}<br></br>
+                日期： {new Date(art.time).toLocaleDateString()}
             </Typography>
             {
-                article.tags
+                art.tags
                     ?
                     <Box sx={{
                         fontWeight: 'bold'
                     }}>
-                        标签：{article.tags.map((tag) => (
+                        标签：{art.tags.map((tag) => (
                             <Chip
                                 sx={{ mr: 1 }}
                                 onClick={() => router.push(`/tag/${tag}`)}
@@ -82,23 +96,23 @@ const Art = ({ article, user, url }: ArtProps) => {
                 dangerouslySetInnerHTML={{ __html: text }}
             ></div>
             <Divider></Divider>
-            <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
-            <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
-        </Layout>
+            <ArticleLikes url={url} user={user} articleId={art.id}></ArticleLikes>
+            <ArticleComments url={url} user={user} articleId={art.id}></ArticleComments>
+        </Layout >
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
     const id = ctx.query.id as string
-    const article = (await supabaseAdmin
+    const art = (await supabaseAdmin
         .from('art')
         .select()
         .eq('id', id)
         .single())
         .data
-    return article ? {
+    return art ? {
         props: {
-            article,
+            art,
             user: getSession(ctx.req, ctx.res)?.user ?? null, // undefined 不可序列化
             url: `https://${ctx.req.headers.host}${ctx.resolvedUrl}`
         }

@@ -16,6 +16,14 @@ const nextConfig = {
         hostname: 'pbs.twimg.com',
         pathname: '/profile_images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.newhongqi.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'bbvsukzcbmlmapdkuybx.supabase.co',
+      },
     ],
   },
 }
