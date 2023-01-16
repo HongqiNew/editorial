@@ -1,49 +1,47 @@
 import supabaseAdmin from '../api/utils/_supabaseClient'
-import { Article } from '../../components/art'
-import Layout from '../../layout'
 import { GetServerSideProps } from 'next'
 import { Box } from '@mui/material'
-import { ArticleRow } from '../../components/row'
+import Row from '../../components/row'
+import Layout from '../../layout'
+import { Article } from '../../utils/types'
 
 type ArtProps = {
-    articles: Article[]
+    arts: Article[]
     tag: string
 }
 
-const Art = ({ articles, tag }: ArtProps) => {
+const Art = ({ arts, tag }: ArtProps) => {
     return (
-        <Layout title={`标签 ${tag}`} description={articles.map(article => article.title).join('\n')}>
+        <Layout title={`标签 ${tag}`} description={arts.map(article => article.title).join('\n')}>
             <Box sx={{
                 display: { sm: 'flex', xs: 'none' },
                 padding: '0 4% 0 0'
             }}>
-                <ArticleRow articles={articles.filter((value, index) => index % 3 === 0)} />
-                <ArticleRow articles={articles.filter((value, index) => index % 3 === 1)} />
-                <ArticleRow articles={articles.filter((value, index) => index % 3 === 2)} />
+                <Row arts={arts.filter((value, index) => index % 3 === 0)} />
+                <Row arts={arts.filter((value, index) => index % 3 === 1)} />
+                <Row arts={arts.filter((value, index) => index % 3 === 2)} />
             </Box>
             <Box sx={{
                 display: { sm: 'none', xs: 'flex' },
                 flexDirection: 'column',
                 padding: '0 5%',
             }}>
-                <ArticleRow articles={articles} />
+                <Row arts={arts} />
             </Box>
-
-            <br></br>
         </Layout>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
     const tag = ctx.query.tag as string
-    const articles = (await supabaseAdmin
-        .from('hongqiart')
+    const arts = (await supabaseAdmin
+        .from('art')
         .select()
         .contains('tags', [tag]))
         .data ?? []
     return {
         props: {
-            articles,
+            arts,
             tag
         }
     }

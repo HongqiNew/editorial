@@ -1,34 +1,35 @@
 import { Box, Pagination, PaginationItem } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import router from 'next/router'
-import CollectionPreview, { Collection } from '../components/col'
-import { CollectionRow } from '../components/row'
+import Preview from '../components/preview'
+import Row from '../components/row'
 import Layout from '../layout'
+import { Article } from '../utils/types'
 import supabaseAdmin from './api/utils/_supabaseClient'
 
 type HomeProps = {
-    collections: Collection[]
-    topCollection: Collection
+    arts: Article[]
     page: number
     pageCount: number
 }
 
-const Home = ({ collections, topCollection, page, pageCount }: HomeProps) => {
+const Home = ({ arts, page, pageCount }: HomeProps) => {
+    const tempArt = { id: 111, cover: 'https://i0.wp.com/www.agilenative.com/wp-content/uploads/2017/01/001-Agile-Hello-World.png?w=1745&ssl=1', title: '社论发布站数据结构重新设计，暂时无法使用' } as Article
     return (
         <Layout title='主页'>
             <Box sx={{
                 display: { sm: 'flex', xs: 'none' },
                 padding: '0 4%',
             }}>
-                <CollectionPreview sx={{ width: '100%' }} collection={topCollection} />
+                <Preview sx={{ width: '100%' }} art={tempArt} />
             </Box>
             <Box sx={{
                 display: { sm: 'flex', xs: 'none' },
                 padding: '0 4%',
             }}>
-                <CollectionRow collections={collections.filter((value, index) => index % 3 === 0)} />
-                <CollectionRow collections={collections.filter((value, index) => index % 3 === 1)} />
-                <CollectionRow smMarginRight='0' collections={collections.filter((value, index) => index % 3 === 2)} />
+                <Row arts={arts.filter((value, index) => index % 3 === 0)} />
+                <Row arts={arts.filter((value, index) => index % 3 === 1)} />
+                <Row smMarginRight='0' arts={arts.filter((value, index) => index % 3 === 2)} />
             </Box>
 
             <Box sx={{
@@ -36,8 +37,8 @@ const Home = ({ collections, topCollection, page, pageCount }: HomeProps) => {
                 flexDirection: 'column',
                 padding: '0 5%',
             }}>
-                <CollectionPreview collection={topCollection} />
-                <CollectionRow collections={collections} />
+                <Preview art={tempArt} />
+                <Row arts={arts} />
             </Box>
             <br></br>
 
@@ -55,57 +56,30 @@ const Home = ({ collections, topCollection, page, pageCount }: HomeProps) => {
                     />
                 )}
             ></Pagination>
-            <br></br>
         </Layout>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-    const collectionNumPerPage = 9
-    const firstCollectionId = 10
+    const artCountPerPage = 9
     const page = ctx.query.page ? parseInt(ctx.query.page as string) : 1
-    // 取回最新刊物 ID
-    const lastCollectionId = (await supabaseAdmin
-        .from('hongqicol')
-        .select('id')
+
+    const count = (await supabaseAdmin
+        .from('art')
+        .select('*', { count: 'exact', head: true })).count as number
+    const pageCount = Math.ceil(count / artCountPerPage)
+
+    const artsDataPromise = supabaseAdmin
+        .from('art')
+        .select('id,title,cover')
         .order('id', { ascending: false })
-        .limit(1)
-        .single())
-        .data
-        .id
-    const searchStartId = lastCollectionId - (page - 1) * collectionNumPerPage
+        .range((page - 1) * artCountPerPage, page * artCountPerPage - 1)
 
-    // 取回含文章的刊物
-    const collectionsDataPromise = supabaseAdmin
-        .from('hongqicol')
-        .select('id,time,title,preview')
-        .not('articles', 'is', null)
-        .not('id', 'eq', 0)
-        .lte('id', searchStartId)
-        .order('id', { ascending: false })
-        .limit(collectionNumPerPage)
-
-    // 取回置顶刊
-    const topCollectionDataPromise = supabaseAdmin
-        .from('hongqicol')
-        .select('id,time,title,preview')
-        .eq('id', 0)
-        .single()
-
-    // 等待所有 Promise 完成并取出数据
-    const [collectionsData, topCollectionData] = await Promise.all([
-        collectionsDataPromise,
-        topCollectionDataPromise,
-    ])
-    const collections = collectionsData.data
-    const topCollection = topCollectionData.data
-
-    // 总页数 = 刊物数 / 每页刊物数（进一）
-    // 刊物数 ≈ 最后一刊 ID - 第一刊 ID + 1 （植树问题）
-    const pageCount = Math.ceil((lastCollectionId - firstCollectionId + 1) / collectionNumPerPage)
+    const artsData = await artsDataPromise
+    const arts = artsData.data
 
     return {
-        props: { collections, topCollection, page, pageCount }
+        props: { arts, page, pageCount }
     }
 }
 

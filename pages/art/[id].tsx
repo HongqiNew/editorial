@@ -5,13 +5,13 @@ import { makeMarkdownLinkUseRouterPush, markdownWithHtml } from '../../utils/md'
 import styles from '../../styles/Typo.module.css'
 import { getSession, Claims } from '@auth0/nextjs-auth0'
 import ArticleComments from '../../components/comments'
-import supabaseAdmin from '../api/utils/_supabaseClient'
-import { Article } from '../../components/art'
+import supabaseAdmin from '../api/utils/_supabaseClient' 
 import ArticleLikes from '../../components/like'
 import { useEffect, useState } from 'react'
 import router from 'next/router'
 import chineseConverter from '../../utils/cnconverter'
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
+import { Article } from '../../utils/types'
 
 type ArtProps = {
     article: Article
@@ -34,10 +34,6 @@ const Art = ({ article, user, url }: ArtProps) => {
 
     return (
         <Layout title={article.title} description={text} cover={article.cover}>
-            <Box sx={{
-                ml: { xs: '12%', sm: '18%', md: '20%' },
-                mr: { xs: '12%', sm: '18%', md: '20%' }
-            }}>
                 <Fab onClick={convert} variant='extended' sx={{
                     position: 'fixed',
                     top: '85px',
@@ -88,8 +84,6 @@ const Art = ({ article, user, url }: ArtProps) => {
                 <Divider></Divider>
                 <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
                 <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
-                <br></br><br></br>
-            </Box>
         </Layout>
     )
 }
@@ -97,7 +91,7 @@ const Art = ({ article, user, url }: ArtProps) => {
 export const getServerSideProps: GetServerSideProps = async ctx => {
     const id = ctx.query.id as string
     const article = (await supabaseAdmin
-        .from('hongqiart')
+        .from('art')
         .select()
         .eq('id', id)
         .single())

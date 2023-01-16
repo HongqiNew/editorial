@@ -62,13 +62,14 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
             color='transparent'
         >
             <Toolbar>
+                <Box sx={{ flexGrow: 0.2 }} />
                 <IconButton sx={{ mr: 2 }} onClick={() => router.back()}>
                     <WestIcon></WestIcon>
                 </IconButton>
                 <Link href='/'>
-                    <Image width={75} height={28} alt='《新红旗》缩小 Logo' src={Logo}></Image>
+                    <Image width={75} height={28} alt='logo' src={Logo}></Image>
                 </Link>
-                <Box sx={{ flexGrow: 1 }} />
+                <Box sx={{ flexGrow: 0.6 }} />
                 <LayoutSearch></LayoutSearch>
                 <IconButton onClick={toggle}>
                     <MenuIcon />
@@ -91,6 +92,7 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
                             <AccountCircleIcon />
                     }
                 </IconButton>
+                <Box sx={{ flexGrow: 0.2 }} />
             </Toolbar>
 
             <Drawer open={isMenuOpen} onClose={handleMenu} anchor='top'>

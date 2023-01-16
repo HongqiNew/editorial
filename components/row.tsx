@@ -1,42 +1,25 @@
 import { Box } from '@mui/material'
-import ArticlePreview, { Article } from './art'
-import CollectionPreview, { Collection } from './col'
+import { Article } from '../utils/types'
+import Preview from './preview'
 
-type CollectionRowProps = {
-    collections: Collection[]
+type RowProps = {
+    arts: Article[]
     smMarginRight?: string
 }
 
-export const CollectionRow = ({ collections, smMarginRight }: CollectionRowProps) => {
+const Row = ({ arts, smMarginRight }: RowProps) => {
     return (
         <Box sx={{
-            marginRight: { sm: smMarginRight ?? '3%', xs: '0' },
+            marginRight: { sm: smMarginRight ?? '30px', xs: '0' },
             maxWidth: { sm: '31.3%', xs: 'unset' }
         }}>
             {
-                collections.map(col => (
-                    <CollectionPreview collection={col} key={col.id} />
+                arts.map(art => (
+                    <Preview key={art.id} art={art} />
                 ))
             }
         </Box>
     )
 }
 
-type ArticleRowProps = {
-    articles: Article[]
-}
-
-export const ArticleRow = ({ articles }: ArticleRowProps) => {
-    return (
-        <Box sx={{
-            marginLeft: { sm: '4%', xs: '0' },
-            width: { sm: '50%', xs: 'unset' }
-        }}>
-            {
-                articles.map(art => (
-                    <ArticlePreview article={art} key={art.id} />
-                ))
-            }
-        </Box>
-    )
-}
+export default Row

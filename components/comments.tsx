@@ -7,16 +7,7 @@ import markdown, { makeMarkdownLinkUseRouterPush } from '../utils/md'
 import CommentInput from './input'
 import ReplyIcon from '@mui/icons-material/Reply'
 import DeleteIcon from '@mui/icons-material/Delete'
-
-export type Comment = {
-    id: string
-    time: number
-    user_id: string
-    user_name: string
-    article: number
-    text: string
-    isMe: boolean
-}
+import { Comment } from '../utils/types'
 
 type ArticleCommentsProps = {
     user: Claims | null

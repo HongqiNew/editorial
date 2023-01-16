@@ -23,6 +23,8 @@ const Layout = ({ children, title, description, cover }: LayoutProps) => {
                     sx={{
                         width: '100%',
                         minHeight: 'calc(100vh - 78px)',
+                        pl: { xs: '12%', sm: '18%', md: '20%' },
+                        pr: { xs: '12%', sm: '18%', md: '20%' }
                     }}
                 >
                     <Box sx={{
