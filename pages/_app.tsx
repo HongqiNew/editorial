@@ -32,13 +32,13 @@ function App({ Component, pageProps }: AppProps) {
       palette: {
         mode,
         primary: {
-          main: 'rgb(176,26,1)',
+          main: 'rgb(200,50,25)',
           contrastText: '#000',
         },
-        divider: 'grey',
+        divider: mode === 'dark' ? '#3d3d40' : 'grey',
         background: {
-          default: mode === 'dark' ? 'rgb(20,20,20)' : 'rgb(245,245,245)',
-          paper: mode === 'dark' ? 'black' : 'white'
+          default: mode === 'dark' ? 'black' : 'rgb(245,245,245)',
+          paper: mode === 'dark' ? 'rgb(28,28,28)' : 'white'
         },
       },
     })

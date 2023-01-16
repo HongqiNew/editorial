@@ -63,7 +63,7 @@ const Home = ({ collections, topCollection, page, pageCount }: HomeProps) => {
 export const getServerSideProps: GetServerSideProps = async ctx => {
     const collectionNumPerPage = 9
     const firstCollectionId = 10
-    const page = ctx.query.page ? parseInt(ctx.query.page as string) : 0
+    const page = ctx.query.page ? parseInt(ctx.query.page as string) : 1
     // 取回最新刊物 ID
     const lastCollectionId = (await supabaseAdmin
         .from('hongqicol')
@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         .single())
         .data
         .id
-    const searchStartId = lastCollectionId - page * collectionNumPerPage
+    const searchStartId = lastCollectionId - (page - 1) * collectionNumPerPage
 
     // 取回含文章的刊物
     const collectionsDataPromise = supabaseAdmin

@@ -2,7 +2,7 @@ import { Alert, Snackbar, Typography, IconButton, Box, Link } from '@mui/materia
 import React, { useContext, useEffect } from 'react'
 import SendIcon from '@mui/icons-material/Send'
 import post from '../utils/api'
-import { ColorModeContext } from '../pages/_app'
+import useMode from '../utils/theme'
 
 type CommentInputProps = {
     errorChecker?: (value: string) => boolean
@@ -49,8 +49,7 @@ const CommentInput = (props: CommentInputProps) => {
         }
     }
 
-    const mode = useContext(ColorModeContext)
-    console.log({ mode })
+    const mode = useMode()
 
     return (
         <>
@@ -59,9 +58,9 @@ const CommentInput = (props: CommentInputProps) => {
             </Typography>
             <Box
                 sx={{
-                    backgroundColor: mode === 'dark' ? 'black' : 'white',
+                    backgroundColor: mode === 'dark' ? 'rgb(28,28,28)' : 'white',
                     width: '100%',
-                    borderRadius: 3,
+                    borderRadius: 6,
                     p: '5px 5px 5px 5px'
                 }}
             >
@@ -84,7 +83,7 @@ const CommentInput = (props: CommentInputProps) => {
             <Box sx={{
                 display: 'flex',
             }}>
-                <Typography sx={{ opacity: 0.5 }}>
+                <Typography sx={{ opacity: 0.3 }}>
                     对本文评论请使用 <Link href='/art/2' target='_blank' rel='noreferrer'>Markdown</Link> 语法。如果你不知道什么是 Markdown，请直接键入你的评论即可。<Link href='https://pandao.github.io/editor.md/' target='_blank' rel='noreferrer'>这里</Link>有一个在线 Markdown 编辑器，它的界面有中文翻译且完全<Link href='https://github.com/pandao/editor.md' target='_blank' rel='noreferrer'>开源</Link>。
                 </Typography>
                 <Box sx={{ width: '50%' }}></Box>

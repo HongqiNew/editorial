@@ -7,21 +7,21 @@ import { IconButton } from '@mui/material'
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     display: 'flex',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: 'rgba(255,192,203,0.6)',
+    borderRadius: 100,
+    backgroundColor: 'rgba(200,200,200,0.6)',
     '&:hover': {
-        backgroundColor: 'rgba(255,192,203,0.7)',
+        backgroundColor: 'rgba(200,200,200,0.7)',
     },
     marginRight: theme.spacing(2),
     maxWidth: '50%',
-    marginLeft: theme.spacing(2.5),
+    marginLeft: theme.spacing(2),
     width: 'auto',
+    justifyContent: 'flex-end'
 }))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'pink',
     '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
+        padding: theme.spacing(1, 0, 1, 1),
         transition: theme.transitions.create('width'),
         width: '100%',
     },
@@ -39,17 +39,17 @@ const LayoutSearch = () => {
     }
     return (
         <Search>
-            <IconButton sx={{
-                m: '0 0.5px 0 1px'
-            }} rel='noreferrer' target='_blank' href={`https://www.google.com/search?q=site:newhongqi.org ${value}`}>
-                <SearchIcon htmlColor='pink' />
-            </IconButton>
             <StyledInputBase
                 value={value}
                 onChange={handleChange}
                 onKeyUp={handleKeyUp}
                 inputProps={{ 'aria-label': 'search' }}
             />
+            <IconButton sx={{
+                m: '0 0.5px 0 1px'
+            }} rel='noreferrer' target='_blank' href={`https://www.google.com/search?q=site:newhongqi.org ${value}`}>
+                <SearchIcon />
+            </IconButton>
         </Search>
     )
 }

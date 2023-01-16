@@ -87,7 +87,6 @@ const Art = ({ article, user, url }: ArtProps) => {
                 ></div>
                 <Divider></Divider>
                 <ArticleLikes url={url} user={user} articleId={article.id}></ArticleLikes>
-                <br></br>
                 <ArticleComments url={url} user={user} articleId={article.id}></ArticleComments>
                 <br></br><br></br>
             </Box>

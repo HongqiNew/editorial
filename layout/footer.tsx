@@ -18,7 +18,7 @@ const LayoutFooter = () => {
             }}>
                 <Box sx={{ flexGrow: 0.3 }}></Box>
                 <Box sx={{ width: 300 }}>
-                    <Typography sx={{ textAlign: 'center' }}>CC BY-SA 4.0 | tech@newhongqi.org</Typography>
+                    <Typography variant='body2' sx={{ textAlign: 'center' }}>CC BY-SA 4.0 | tech@newhongqi.org</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 0.2 }}></Box>
                 <Box>
