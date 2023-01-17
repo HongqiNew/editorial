@@ -11,11 +11,11 @@ import { Comment } from '../utils/types'
 
 type ArticleCommentsProps = {
     user: Claims | null
-    articleId: number
+    artId: number
     url: string
 }
 
-const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
+const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
     const [comments, setComments]: [Comment[] | [], Dispatch<SetStateAction<Comment[] | []>>]
         = useState(new Array())
     const [hasCommentsLoaded, setHasCommentsLoaded] = useState(false)
@@ -23,14 +23,14 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
 
     const loadComments = async () => {
         setHasCommentsLoaded(true)
-        const data: Comment[] | [] = (await get('/api/loadComments', { articleId })) ?? []
+        const data: Comment[] | [] = (await get('/api/loadComments', { artId })) ?? []
         setComments(data)
         setTimeout(() => {
             makeMarkdownLinkUseRouterPush()
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { loadComments() }, [articleId])
+    // useEffect(() => { loadComments() }, [artId])
 
     const replyComment = (text: string) => {
         const quote = text.split('\n').map((line) => `> ${line}`).join('\n')
@@ -55,7 +55,7 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
                         errorChecker={value => value.length === 0}
                         placeholder='可直接发送纯文本。'
                         body={{
-                            articleId
+                            artId
                         }}>
                     </CommentInput>
                     :
@@ -86,7 +86,7 @@ const ArticleComments = ({ user, articleId, url }: ArticleCommentsProps) => {
                             {new Date(comment.time).toLocaleString()}
                         </Typography>
                         <Typography variant='body1'>
-                            {comment.user_name}（ID：{comment.user_id}）
+                            {comment.user_name}（ID：{comment.userId}）
                         </Typography>
                         <span
                             className={styles.typoComment}

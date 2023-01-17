@@ -1,7 +1,7 @@
 import supabaseAdmin from '../api/utils/_supabaseClient'
 import { GetServerSideProps } from 'next'
 import { Box } from '@mui/material'
-import Row from '../../components/row'
+import Articles from '../../components/articles'
 import Layout from '../../layout'
 import { Article } from '../../utils/types'
 
@@ -13,21 +13,7 @@ type ArtProps = {
 const Art = ({ arts, tag }: ArtProps) => {
     return (
         <Layout title={`标签 ${tag}`} description={arts.map(article => article.title).join('\n')}>
-            <Box sx={{
-                display: { sm: 'flex', xs: 'none' },
-                padding: '0 4% 0 0'
-            }}>
-                <Row arts={arts.filter((value, index) => index % 3 === 0)} />
-                <Row arts={arts.filter((value, index) => index % 3 === 1)} />
-                <Row arts={arts.filter((value, index) => index % 3 === 2)} />
-            </Box>
-            <Box sx={{
-                display: { sm: 'none', xs: 'flex' },
-                flexDirection: 'column',
-                padding: '0 5%',
-            }}>
-                <Row arts={arts} />
-            </Box>
+                <Articles arts={arts} />
         </Layout>
     )
 }

@@ -14,7 +14,6 @@ const Preview = ({ art, sx }: PreviewProps) => {
     }
     return (
         <Card sx={{
-            mb: 3,
             boxShadow: 'none',
             ...sx
         }}>

@@ -4,27 +4,28 @@ import splitId from './utils/_splitId'
 import supabaseAdmin from './utils/_supabaseClient'
 
 const loadLikes = async (req: NextApiRequest, res: NextApiResponse) => {
-    const article: string = req.body.articleId
-    
+    const { artId } = req.body
+
     // 总获赞数
     const { count } = await supabaseAdmin
-        .from('hongqilike')
+        .from('like')
         .select('*', { count: 'exact', head: true })
         .match({
-            article
+            artId
         })
 
-    const session = await getSession(req, res)
+    const session = getSession(req, res)
     // 用户是否点赞，默认为 false
     let liked = false
     if (session) {
+        const userId = splitId(session.user.sub)
         // 已登录，另外查询
         const userLikeCount = (await supabaseAdmin
-            .from('hongqilike')
-            .select('article', { count: 'exact', head: true })
+            .from('like')
+            .select('artId', { count: 'exact', head: true })
             .match({
-                article,
-                user_id: splitId(session.user.sub)
+                artId,
+                userId
             }))
             .count
         liked = userLikeCount !== 0

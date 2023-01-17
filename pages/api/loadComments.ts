@@ -4,13 +4,13 @@ import splitId from './utils/_splitId'
 import supabaseAdmin from './utils/_supabaseClient'
 
 const loadComments = async (req: NextApiRequest, res: NextApiResponse) => {
-    const article: string = req.body.articleId
+    const { artId } = req.body
     
     const { data, error } = await supabaseAdmin
-        .from('hongqicom')
+        .from('com')
         .select()
         .match({
-            article
+            artId
         })
         .order('created_at')
 
@@ -23,8 +23,8 @@ const loadComments = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json(data.map((comment) => ({
             ...comment,
             time: new Date(comment.created_at).getTime(), // 创建时间转 Javascript 时间戳
-            user_id: `${(comment.user_id as string).substring(0, 5)}***`, // 截取用户id前5位
-            isMe: session ? comment.user_id === splitId(session.user.sub).toString() : false, // 判断是否是当前用户
+            userId: `${(comment.userId as string).substring(0, 5)}***`, // 截取用户id前5位
+            isMe: session ? comment.userId === splitId(session.user.sub).toString() : false, // 判断是否是当前用户
         })))
     }
 }

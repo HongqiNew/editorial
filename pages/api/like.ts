@@ -3,17 +3,16 @@ import splitId from './utils/_splitId'
 import supabaseAdmin from './utils/_supabaseClient'
 
 export default withApiAuthRequired(async (req, res) => {
-    const article: string = req.body.articleId
-    
-    const user = getSession(req, res)!.user
+    const { artId } = req.body
+    const userId = splitId(getSession(req, res)!.user.sub)
     const option = {
-        article,
-        user_id: splitId(user.sub),
+        artId,
+        userId,
     }
 
-    // 通过 article 和 user_id 查询是否已经点赞
+    // 通过 artId 和 userId 查询是否已经点赞
     const liked = Boolean((await supabaseAdmin
-        .from('hongqilike')
+        .from('like')
         .select()
         .match(option))
         .data
@@ -22,14 +21,14 @@ export default withApiAuthRequired(async (req, res) => {
     if (liked) {
         // 已经点赞，取消
         await supabaseAdmin
-            .from('hongqilike')
+            .from('like')
             .delete()
             .match(option)
     }
     else {
         // 未点赞，点赞
         await supabaseAdmin
-            .from('hongqilike')
+            .from('like')
             .insert(option, {
                 returning: 'minimal',
             })

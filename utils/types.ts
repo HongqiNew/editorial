@@ -4,6 +4,7 @@ export type Article = {
     time: number
     author: string
     md: string
+    pin: boolean
     cover?: string
     download?: string
     tags?: string[]
@@ -13,7 +14,7 @@ export type Article = {
 export type Comment = {
     id: string
     time: number
-    user_id: string
+    userId: string
     user_name: string
     article: number
     text: string

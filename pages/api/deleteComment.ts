@@ -3,13 +3,13 @@ import splitId from './utils/_splitId'
 import supabaseAdmin from './utils/_supabaseClient'
 
 export default withApiAuthRequired(async (req, res) => {
-    const id: string = req.body.id
-    
-    const user = getSession(req, res)!.user
+    const {id} = req.body
+    const userId = splitId(getSession(req, res)!.user.sub)
     const option = {
         id,
-        user_id: splitId(user.sub), // 只能删除自己的评论
+        userId, // 只能删除自己的评论
     }
+
     const { error } = await supabaseAdmin
         .from('hongqicom')
         .delete()

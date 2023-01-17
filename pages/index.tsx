@@ -1,46 +1,40 @@
-import { Box, Pagination, PaginationItem } from '@mui/material'
+import { Box, Divider, Grid, Pagination, PaginationItem } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import router from 'next/router'
 import Preview from '../components/preview'
-import Row from '../components/row'
+import Articles from '../components/articles'
 import Layout from '../layout'
 import { Article } from '../utils/types'
 import supabaseAdmin from './api/utils/_supabaseClient'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+const Slider = require('react-slick').default
 
 type HomeProps = {
     arts: Article[]
+    pinnedArts: Article[]
     page: number
     pageCount: number
 }
 
-const Home = ({ arts, page, pageCount }: HomeProps) => {
-    const tempArt = { id: 111, cover: 'https://i0.wp.com/www.agilenative.com/wp-content/uploads/2017/01/001-Agile-Hello-World.png?w=1745&ssl=1', title: '社论发布站数据结构重新设计，暂时无法使用' } as Article
+const Home = ({ arts, pinnedArts, page, pageCount }: HomeProps) => {
+    const settings = {
+        autoplay: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    }
     return (
         <Layout title='主页'>
-            <Box sx={{
-                display: { sm: 'flex', xs: 'none' },
-                padding: '0 4%',
-            }}>
-                <Preview sx={{ width: '100%' }} art={tempArt} />
-            </Box>
-            <Box sx={{
-                display: { sm: 'flex', xs: 'none' },
-                padding: '0 4%',
-            }}>
-                <Row arts={arts.filter((value, index) => index % 3 === 0)} />
-                <Row arts={arts.filter((value, index) => index % 3 === 1)} />
-                <Row smMarginRight='0' arts={arts.filter((value, index) => index % 3 === 2)} />
-            </Box>
-
-            <Box sx={{
-                display: { sm: 'none', xs: 'flex' },
-                flexDirection: 'column',
-                padding: '0 5%',
-            }}>
-                <Preview art={tempArt} />
-                <Row arts={arts} />
-            </Box>
-            <br></br>
+            <Slider {...settings}>
+                {
+                    pinnedArts.map(art => <Preview key={art.id} art={art} />)
+                }
+            </Slider>
+            <Divider sx={{ opacity: 0.5 }}></Divider>
+            <br></br><br></br>
+            <Articles arts={arts}></Articles>
 
             <Pagination
                 sx={{ display: 'flex', justifyContent: 'center' }}
@@ -71,15 +65,22 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
     const artsDataPromise = supabaseAdmin
         .from('art')
-        .select('id,title,cover')
+        .select('id,title,cover,pin')
         .order('id', { ascending: false })
         .range((page - 1) * artCountPerPage, page * artCountPerPage - 1)
 
-    const artsData = await artsDataPromise
+    const pinnedArtsDataPromise = supabaseAdmin
+        .from('art')
+        .select('id,title,cover,pin')
+        .gt('pin', 0)
+        .order('pin')
+
+    const [artsData, pinnedArtsData] = await Promise.all([artsDataPromise, pinnedArtsDataPromise])
     const arts = artsData.data
+    const pinnedArts = pinnedArtsData.data
 
     return {
-        props: { arts, page, pageCount }
+        props: { arts, pinnedArts, page, pageCount }
     }
 }
 

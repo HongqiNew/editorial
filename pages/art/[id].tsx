@@ -96,8 +96,8 @@ const Art = ({ art, user, url }: ArtProps) => {
                 dangerouslySetInnerHTML={{ __html: text }}
             ></div>
             <Divider></Divider>
-            <ArticleLikes url={url} user={user} articleId={art.id}></ArticleLikes>
-            <ArticleComments url={url} user={user} articleId={art.id}></ArticleComments>
+            <ArticleLikes url={url} user={user} artId={art.id}></ArticleLikes>
+            <ArticleComments url={url} user={user} artId={art.id}></ArticleComments>
         </Layout >
     )
 }

@@ -1,53 +1,28 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar } from '@mui/material'
-import React, { useState } from 'react'
+import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material'
+import React from 'react'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import WestIcon from '@mui/icons-material/West'
-import MenuIcon from '@mui/icons-material/Menu'
 import Link from 'next/link'
 import LayoutSearch from './search'
 import router from 'next/router'
 import useMode from '../utils/theme'
 import Image from 'next/image'
 import Logo from './logo.png'
+import Categories from '../components/categories'
 
 type LayoutBarProps = {
     toggle: () => void
 }
 
 const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
+const categoriesMd = categories.map(category => ({ text: category, href: `/tag/${category}` }))
 
 const LayoutBar = ({ toggle }: LayoutBarProps) => {
     const user = useUser().user
     const mode = useMode()
-
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const redirect = (tag: string) => {
-        router.push(`/tag/${tag}`)
-    }
-    const Menu = () => (
-        <Box
-            sx={{ width: 'auto' }}
-            role='presentation'
-            onClick={toggle}
-        >
-            <List>
-                {categories.map(text => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton onClick={() => redirect(text)}>
-                            <ListItemText primary={text} sx={{ textAlign: 'center' }} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    )
-
-    const handleMenu = () => {
-        setIsMenuOpen(open => !open)
-    }
 
     return (
         <AppBar
@@ -62,18 +37,34 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
             color='transparent'
         >
             <Toolbar>
-                <Box sx={{ flexGrow: 0.2 }} />
+                <Box sx={{ flexGrow: 0.15 }} />
                 <IconButton sx={{ mr: 2 }} onClick={() => router.back()}>
                     <WestIcon></WestIcon>
                 </IconButton>
-                <Link href='/'>
-                    <Image width={75} height={28} quality={90} alt='logo' src={Logo}></Image>
+                <Link href='/' style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}>
+                    <Image width={73} height={28} quality={100} alt='logo' src={Logo}></Image>
                 </Link>
-                <Box sx={{ flexGrow: 0.6 }} />
+                <Box sx={{ flexGrow: 0.25 }}></Box>
+
+                <Box sx={{ flexGrow: 0.4, display: { xs: 'none', md: 'flex' } }}>
+                    {categories.map((category) => (
+                        <Button
+                            size='large'
+                            key={category}
+                            onClick={() => { router.push(`/tag/${category}`) }}
+                            sx={{ display: 'block', fontWeight: 'bold' }}
+                            color='secondary'
+                        >
+                            {category}
+                        </Button>
+                    ))}
+                </Box>
+
                 <LayoutSearch></LayoutSearch>
-                <IconButton onClick={toggle}>
-                    <MenuIcon />
-                </IconButton>
+                <Categories sx={{ display: { md: 'none' }, }} items={categoriesMd}></Categories>
                 <IconButton onClick={toggle}>
                     {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
@@ -94,10 +85,6 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
                 </IconButton>
                 <Box sx={{ flexGrow: 0.2 }} />
             </Toolbar>
-
-            <Drawer open={isMenuOpen} onClose={handleMenu} anchor='top'>
-                <Menu />
-            </Drawer>
         </AppBar>
     )
 }

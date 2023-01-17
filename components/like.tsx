@@ -10,27 +10,27 @@ import post, { get } from '../utils/api'
 
 type ArticleLikesProps = {
     user: Claims | null
-    articleId: number
+    artId: number
     url: string
 }
 
-const ArticleLikes = ({ user, articleId, url }: ArticleLikesProps) => {
+const ArticleLikes = ({ user, artId, url }: ArticleLikesProps) => {
     const [likes, setLikes] = useState(NaN)
     const [liked, setLiked] = useState(false)
 
     // 获取点赞数及用户是否点赞，并更新 likes 和 liked
     useEffect(() => {
-        get('/api/loadLikes', { articleId }).then(res => {
+        get('/api/loadLikes', { artId }).then(res => {
             setLikes(res.count ?? 0)
             setLiked(res.liked)
         })
-    }, [articleId])
+    }, [artId])
 
     const handleLike = () => {
         if (user) {
             setLiked(liked => !liked)
             setLikes(likes => likes + (liked ? -1 : 1))
-            post('/api/like', { articleId })
+            post('/api/like', { artId })
         }
         else {
             router.push(`/api/auth/login?redirect=${url}`)
