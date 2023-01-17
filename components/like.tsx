@@ -1,8 +1,8 @@
 import { Claims } from '@auth0/nextjs-auth0'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import TwitterIcon from '@mui/icons-material/Twitter'
-import LinkIcon from '@mui/icons-material/Link';
+import LinkIcon from '@mui/icons-material/Link'
 import { Box, IconButton, Typography } from '@mui/material'
 import router from 'next/router'
 import { useEffect, useState } from 'react'

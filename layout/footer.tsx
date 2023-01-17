@@ -26,7 +26,7 @@ const LayoutFooter = () => {
                 minHeight: 76,
             }}>
                 <Grid {...gridItemProps} >
-                    <Link href='/art/47' style={{ textDecorationLine: 'underline', marginRight: 8 }}>关于我们</Link>|&nbsp;&nbsp;
+                    <Link href='/art/47' style={{ textDecorationLine: 'underline', marginRight: 8 }}>About</Link>|&nbsp;&nbsp;
                     <Link target='_blank' rel='noreferrer' href='https://creativecommons.org/licenses/by-sa/4.0/'><Image alt='CC' src={CC} style={{ marginTop: 8 }}></Image></Link>
                 </Grid>
 

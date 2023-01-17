@@ -11,7 +11,7 @@ export default withApiAuthRequired(async (req, res) => {
     }
 
     const { error } = await supabaseAdmin
-        .from('hongqicom')
+        .from('comment')
         .delete()
         .match(option)
 

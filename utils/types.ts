@@ -14,9 +14,9 @@ export type Article = {
 export type Comment = {
     id: string
     time: number
-    userId: string
-    user_name: string
-    article: number
     text: string
+    userPic: string
+    userName: string
+    artId: number
     isMe: boolean
 }

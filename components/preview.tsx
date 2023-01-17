@@ -22,6 +22,7 @@ const Preview = ({ art, sx }: PreviewProps) => {
                     cover
                         ?
                         <CardMedia
+                            sx={{ maxHeight: '50vh' }}
                             component='img'
                             alt={title}
                             image={cover}

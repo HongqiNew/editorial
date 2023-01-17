@@ -44,6 +44,7 @@ const Art = ({ art, user, url }: ArtProps) => {
                 <ChangeCircleIcon />
                 {isSimp ? '简➢繁' : '繁➣简'}
             </Fab>
+
             {
                 art.cover
                     ?
@@ -57,15 +58,18 @@ const Art = ({ art, user, url }: ArtProps) => {
                     :
                     <></>
             }
+
             <Typography variant='h3' sx={{
                 fontWeight: 'bolder',
                 opacity: 0.9
             }}>
                 {art.title}
             </Typography>
+
             <Typography variant='caption'>
                 本文约在 {Math.ceil(art.md.length * 0.9 - (art.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(art.md.length / 600)} 分钟。
             </Typography>
+
             <Typography sx={{
                 whiteSpace: 'pre-line',
                 fontWeight: 'bold'
@@ -73,6 +77,7 @@ const Art = ({ art, user, url }: ArtProps) => {
                 作者： {art.author}<br></br>
                 日期： {new Date(art.time).toLocaleDateString()}
             </Typography>
+
             {
                 art.tags
                     ?
@@ -91,11 +96,13 @@ const Art = ({ art, user, url }: ArtProps) => {
                     :
                     <></>
             }
+
             <div
                 className={styles.typo}
                 dangerouslySetInnerHTML={{ __html: text }}
             ></div>
             <Divider></Divider>
+            
             <ArticleLikes url={url} user={user} artId={art.id}></ArticleLikes>
             <ArticleComments url={url} user={user} artId={art.id}></ArticleComments>
         </Layout >

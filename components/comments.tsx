@@ -1,5 +1,5 @@
 import { Claims } from '@auth0/nextjs-auth0'
-import { Button, Paper, IconButton, Typography } from '@mui/material'
+import { Button, Paper, IconButton, Typography, Grid, Box } from '@mui/material'
 import styles from '../styles/Typo.module.css'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import post, { get } from '../utils/api'
@@ -8,6 +8,7 @@ import CommentInput from './input'
 import ReplyIcon from '@mui/icons-material/Reply'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Comment } from '../utils/types'
+import Image from 'next/image'
 
 type ArticleCommentsProps = {
     user: Claims | null
@@ -30,7 +31,7 @@ const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // useEffect(() => { loadComments() }, [artId])
+    useEffect(() => { loadComments() }, [artId])
 
     const replyComment = (text: string) => {
         const quote = text.split('\n').map((line) => `> ${line}`).join('\n')
@@ -48,7 +49,6 @@ const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
                 user
                     ?
                     <CommentInput
-                        rows={5}
                         value={userComment}
                         setValue={setUserComment}
                         url={`/api/comment`}
@@ -56,42 +56,52 @@ const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
                         placeholder='可直接发送纯文本。'
                         body={{
                             artId
-                        }}>
-                    </CommentInput>
+                        }}></CommentInput>
                     :
-                    <Button variant='outlined' color='primary' fullWidth href={`/api/auth/login?redirect=${url}`}>登录以评论</Button>
+                    <Button sx={{ mb: 1 }} variant='outlined' color='primary' fullWidth href={`/api/auth/login?redirect=${url}`}>登录以评论</Button>
             }
-            <br></br>
-            <br></br>
             <Button variant='outlined' color='primary' disabled={!hasCommentsLoaded} fullWidth onClick={loadComments}>
                 {hasCommentsLoaded ? '刷新评论' : '评论加载中……'}
             </Button>
             {
                 comments.map((comment, index) => (
                     <Paper elevation={0} key={index} className={styles.typo} sx={{
-                        padding: '10px 10px 0 10px',
+                        padding: 2,
                         whiteSpace: 'pre-line',
                         position: 'relative',
                         marginTop: 4,
                     }}>
-                        <IconButton color='primary' sx={{ position: 'absolute', right: 0, top: 0 }} onClick={() => replyComment(comment.text)}><ReplyIcon /></IconButton>
-                        {
-                            comment.isMe
-                                ?
-                                <IconButton color='primary' sx={{ position: 'absolute', right: 40, top: 0 }} onClick={() => deleteComment(comment.id)}><DeleteIcon /></IconButton>
-                                :
-                                <></>
-                        }
-                        <Typography variant='caption'>
-                            {new Date(comment.time).toLocaleString()}
-                        </Typography>
-                        <Typography variant='body1'>
-                            {comment.user_name}（ID：{comment.userId}）
-                        </Typography>
-                        <span
-                            className={styles.typoComment}
-                            dangerouslySetInnerHTML={{ __html: markdown.render(comment.text) }}
-                        ></span>
+                        <Box sx={{
+                            display: 'flex'
+                        }}>
+                            <Box sx={{ mr: 2, minWidth: 50 }}>
+                                <Image width={50} height={50} src={comment.userPic} alt='头像' style={{
+                                    borderRadius: 50,
+                                }}></Image>
+                            </Box>
+                            <Box>
+                                <IconButton color='primary' sx={{ position: 'absolute', right: 0, top: 0 }} onClick={() => replyComment(comment.text)}><ReplyIcon /></IconButton>
+                                {
+                                    comment.isMe
+                                        ?
+                                        <IconButton color='primary' sx={{ position: 'absolute', right: 40, top: 0 }} onClick={() => deleteComment(comment.id)}><DeleteIcon /></IconButton>
+                                        :
+                                        <></>
+                                }
+
+                                <Typography variant='body1' sx={{ fontWeight: 'bold', mb: '0 !important' }} color='primary'>
+                                    {comment.userName} &nbsp;&nbsp;&nbsp;
+                                    <Typography variant='caption' color='secondary'>
+                                        {new Date(comment.time).toLocaleString()}
+                                    </Typography>
+                                </Typography>
+                                <span
+                                    style={{ whiteSpace: 'normal' }}
+                                    className={styles.typoComment}
+                                    dangerouslySetInnerHTML={{ __html: markdown.render(comment.text) }}
+                                ></span>
+                            </Box>
+                        </Box>
                     </Paper>
                 ))
             }
