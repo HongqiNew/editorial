@@ -25,6 +25,7 @@
     "markdown-it-block-image": "^0.0.3",
     "markdown-it-for-inline": "^0.1.1",
     "markdown-it-pangu": "^1.0.2",
+    "markdown-it-toc-done-right": "^4.2.0",
     "next": "^13.1.2",
     "next-pwa": "^5.5.4",
     "nextjs-google-analytics": "^1.2.1",

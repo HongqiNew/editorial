@@ -1,6 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 import router from 'next/router'
+import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
 
 // 标记 ID，方便识别并附加 onclick 事件
 const MarkdownItLink = (tokens: any, idx: any) => {
@@ -46,6 +47,7 @@ export const markdownWithHtml: MarkdownIt = MarkdownIt({
   breaks: true,
 })
   .use(MarkdownItAnchor)
+  .use(MarkdownItTocDoneRight)
   .use(
     require('markdown-it-for-inline'),
     'url_next',

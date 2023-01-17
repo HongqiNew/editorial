@@ -8,6 +8,6 @@
 
 《新红旗》社论发布站：[NewHongqi.org](https://newhongqi.org)
 
-## 如何部署
+## 如何部署（早期版本）
 
 请参见 [部署《新红旗》式的社论发布站》一文](https://newhongqi.org/art/42)

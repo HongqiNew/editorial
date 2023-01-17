@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import TelegramIcon from '@mui/icons-material/Telegram'
+import GitHubIcon from '@mui/icons-material/GitHub'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import Image from 'next/image'
 import Logo from './logo.png'
@@ -35,8 +36,8 @@ const LayoutFooter = () => {
                 </Grid>
 
                 <Grid {...gridItemProps}>
-                    <IconButton target='_blank' rel='noreferrer' href='/art/24'>
-                        <LocalAtmIcon></LocalAtmIcon>
+                    <IconButton target='_blank' rel='noreferrer' href='https://github.com/HongqiNew/'>
+                        <GitHubIcon></GitHubIcon>
                     </IconButton>
                     <IconButton target='_blank' rel='noreferrer' href='https://twitter.com/newhongqi'>
                         <TwitterIcon></TwitterIcon>
