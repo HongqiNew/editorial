@@ -32,8 +32,9 @@ const Home = ({ arts, pinnedArts, page, pageCount }: HomeProps) => {
                     pinnedArts.map(art => <Preview key={art.id} art={art} />)
                 }
             </Slider>
+            <br></br>
             <Divider sx={{ opacity: 0.5 }}></Divider>
-            <br></br><br></br>
+            <br></br>
             <Articles arts={arts}></Articles>
 
             <Pagination
