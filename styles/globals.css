@@ -10,13 +10,6 @@ a {
   text-decoration: none;
 }
 
-@font-face {
-  font-family: 'tongyong';
-  font-style: normal;
-  font-display: swap;
-  src: url(/fonts/tongyong.otf);
-}
-
 * {
   box-sizing: border-box;
 }

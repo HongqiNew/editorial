@@ -31,9 +31,6 @@ function App({ Component, pageProps }: AppProps) {
   )
   const theme = useMemo(() => (
     createTheme({
-      typography: {
-        fontFamily: 'tongyong',
-      },
       palette: {
         mode,
         primary: {

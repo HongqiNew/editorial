@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Pagination, PaginationItem } from '@mui/material'
+import { Divider, Pagination, PaginationItem } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import router from 'next/router'
 import Preview from '../components/preview'
