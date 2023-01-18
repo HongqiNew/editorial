@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import Typo from '../styles/typo.module.css'
+import { useEffect } from 'react'
+import Typo from '../styles/Typo.module.css'
 import markdown, { routerifyMarkdownLinks, markdownWithHtml, getMarkdownScripts, displayMarkdownImageAlts } from '../utils/md'
 
 type MarkdownProps = {
@@ -13,7 +13,7 @@ const Markdown = ({ children }: MarkdownProps) => {
     return (
         <span
             style={{ whiteSpace: 'normal' }}
-            dangerouslySetInnerHTML={{ __html: `${markdown.render(children)}` }}
+            dangerouslySetInnerHTML={{ __html: markdown.render(children) }}
             className={Typo.typoComment}
         ></span>
     )
