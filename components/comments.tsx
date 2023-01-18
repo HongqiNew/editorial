@@ -3,12 +3,12 @@ import { Button, Paper, IconButton, Typography, Grid, Box } from '@mui/material'
 import styles from '../styles/Typo.module.css'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import post, { get } from '../utils/api'
-import markdown, { makeMarkdownLinkUseRouterPush } from '../utils/md'
 import CommentInput from './input'
 import ReplyIcon from '@mui/icons-material/Reply'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Comment } from '../utils/types'
 import Image from 'next/image'
+import Markdown from './markdown'
 
 type ArticleCommentsProps = {
     user: Claims | null
@@ -26,9 +26,6 @@ const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
         setHasCommentsLoaded(true)
         const data: Comment[] | [] = (await get('/api/loadComments', { artId })) ?? []
         setComments(data)
-        setTimeout(() => {
-            makeMarkdownLinkUseRouterPush()
-        })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { loadComments() }, [artId])
@@ -95,11 +92,9 @@ const ArticleComments = ({ user, artId, url }: ArticleCommentsProps) => {
                                         {new Date(comment.time).toLocaleString()}
                                     </Typography>
                                 </Typography>
-                                <span
-                                    style={{ whiteSpace: 'normal' }}
-                                    className={styles.typoComment}
-                                    dangerouslySetInnerHTML={{ __html: markdown.render(comment.text) }}
-                                ></span>
+                                <Markdown>
+                                    {comment.text}
+                                </Markdown>
                             </Box>
                         </Box>
                     </Paper>

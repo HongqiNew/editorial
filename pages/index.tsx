@@ -66,7 +66,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
     const artsDataPromise = supabaseAdmin
         .from('art')
-        .select('id,title,cover,pin')
+        .select('id,title,cover,pin,visible')
+        .eq('visible', true)
         .order('id', { ascending: false })
         .range((page - 1) * artCountPerPage, page * artCountPerPage - 1)
 

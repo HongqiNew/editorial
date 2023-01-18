@@ -1,18 +1,17 @@
 import { Typography, Box, Divider, Chip, Fab } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import Layout from '../../layout'
-import { makeMarkdownLinkUseRouterPush, markdownWithHtml } from '../../utils/md'
-import styles from '../../styles/Typo.module.css'
 import { getSession, Claims } from '@auth0/nextjs-auth0'
 import ArticleComments from '../../components/comments'
 import supabaseAdmin from '../api/utils/_supabaseClient'
 import ArticleLikes from '../../components/like'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import router from 'next/router'
 import chineseConverter from '../../utils/cnconverter'
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import { Article } from '../../utils/types'
 import Image from 'next/image'
+import { TrustedMarkdown } from '../../components/markdown'
 
 type ArtProps = {
     art: Article
@@ -21,20 +20,14 @@ type ArtProps = {
 }
 
 const Art = ({ art, user, url }: ArtProps) => {
-    const [text, setText] = useState(markdownWithHtml.render(art.md))
-    useEffect(() => {
-        setText(markdownWithHtml.render(art.md)) // 触发重新渲染
-        makeMarkdownLinkUseRouterPush()
-    }, [art])
-
+    const md = art.md
     const [isSimp, setIsSimp] = useState(true)
     const convert = () => {
-        setText(text => chineseConverter(text, isSimp))
         setIsSimp(isSimp => !isSimp)
     }
 
     return (
-        <Layout title={art.title} description={text} cover={art.cover}>
+        <Layout title={art.title} description={md} cover={art.cover}>
             <Fab onClick={convert} variant='extended' sx={{
                 position: 'fixed',
                 top: '85px',
@@ -97,12 +90,11 @@ const Art = ({ art, user, url }: ArtProps) => {
                     <></>
             }
 
-            <div
-                className={styles.typo}
-                dangerouslySetInnerHTML={{ __html: text }}
-            ></div>
+            <TrustedMarkdown>
+                {isSimp ? md : chineseConverter(md, true)}
+            </TrustedMarkdown>
             <Divider></Divider>
-            
+
             <ArticleLikes url={url} user={user} artId={art.id}></ArticleLikes>
             <ArticleComments url={url} user={user} artId={art.id}></ArticleComments>
         </Layout >
