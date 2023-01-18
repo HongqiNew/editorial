@@ -60,7 +60,7 @@ const Art = ({ art, user, url }: ArtProps) => {
             </Typography>
 
             <Typography variant='caption'>
-                本文约在 {Math.ceil(art.md.length * 0.9 - (art.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(art.md.length / 600)} 分钟。
+                本文约在 {Math.ceil(art.md.length * 0.9 - (art.md.length * 0.9) % 100)} 字左右，阅读时间需要约 {Math.ceil(art.md.length / 500)} 分钟。
             </Typography>
 
             <Typography sx={{

@@ -1,6 +1,5 @@
 import supabaseAdmin from '../api/utils/_supabaseClient'
 import { GetServerSideProps } from 'next'
-import { Box } from '@mui/material'
 import Articles from '../../components/articles'
 import Layout from '../../layout'
 import { Article } from '../../utils/types'

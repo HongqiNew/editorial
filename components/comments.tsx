@@ -1,5 +1,5 @@
 import { Claims } from '@auth0/nextjs-auth0'
-import { Button, Paper, IconButton, Typography, Grid, Box } from '@mui/material'
+import { Button, Paper, IconButton, Typography, Box } from '@mui/material'
 import styles from '../styles/Typo.module.css'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import post, { get } from '../utils/api'

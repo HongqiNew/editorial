@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 import router from 'next/router'
 import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
+import MarkdownItPangu from 'markdown-it-pangu-ts'
 import Token from 'markdown-it/lib/token'
 
 // 标记 ID，方便识别并附加 onclick 事件
@@ -81,7 +82,7 @@ const markdown: MarkdownIt = MarkdownIt()
     .use(require('markdown-it-for-inline'), 'url_next', 'link_open', MarkdownItLink)
 
 export const markdownWithHtml: MarkdownIt = MarkdownIt({ html: true, breaks: true })
-    // .use(require('markdown-it-pangu'))
+    .use(MarkdownItPangu)
     .use(MarkdownItAnchor)
     .use(MarkdownItTocDoneRight)
     .use(require('markdown-it-for-inline'), 'url_next', 'link_open', MarkdownItLink)
