@@ -7,9 +7,10 @@ type LayoutProps = {
     title: string
     description?: string
     cover?: string
+    noPadding?: boolean
 }
 
-const Layout = ({ children, title, description, cover }: LayoutProps) => {
+const Layout = ({ children, title, description, cover, noPadding }: LayoutProps) => {
     return (
         <>
             <LayoutHead title={title} description={description} cover={cover}></LayoutHead>
@@ -23,8 +24,8 @@ const Layout = ({ children, title, description, cover }: LayoutProps) => {
                     sx={{
                         width: '100%',
                         minHeight: 'calc(100vh - 78px)',
-                        pl: { xs: '12%', sm: '18%', md: '20%' },
-                        pr: { xs: '12%', sm: '18%', md: '20%' }
+                        pl: noPadding ? {} : { xs: '12%', sm: '18%', md: '20%' },
+                        pr: noPadding ? {} : { xs: '12%', sm: '18%', md: '20%' }
                     }}
                 >
                     <Box sx={{
