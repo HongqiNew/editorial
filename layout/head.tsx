@@ -34,7 +34,7 @@ const LayoutHead = ({ title, cover, description }: LayoutHeadProps) => {
             <meta name='twitter:site' content='@newhongqi' />
             <meta name='twitter:title' content={title} />
             <meta name='twitter:description' content='《新红旗》，为着无产阶级及其伟大的事业前进！' />
-            <meta name='twitter:image' content={cover ?? 'https://bbvsukzcbmlmapdkuybx.supabase.co/storage/v1/object/public/bed/0.8322131189287469.jpg'} />
+            <meta name='twitter:image' content={cover ?? 'https://bbvsukzcbmlmapdkuybx.supabase.co/storage/v1/object/public/bed/card.jpg'} />
         </Head>
     )
 }
