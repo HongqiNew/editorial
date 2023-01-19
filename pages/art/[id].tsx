@@ -41,7 +41,7 @@ const Art = ({ art, user, url }: ArtProps) => {
             {
                 art.cover
                     ?
-                    <Box sx={{ mb: 2, position: 'relative', display: 'grid', width: '100%', height: 250 }}>
+                    <Box sx={{ mb: 2, position: 'relative', display: 'grid', width: '100%', aspectRatio: '2' }}>
                         <Image style={{ borderRadius: 30, objectFit: 'cover' }} src={art.cover} alt={art.title} fill sizes='
                             (max-width: 600px) 76vw,
                             (max-width: 900px) 64vw,
