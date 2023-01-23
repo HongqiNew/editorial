@@ -5,13 +5,14 @@ import { getSession, Claims } from '@auth0/nextjs-auth0'
 import ArticleComments from '../../components/comments'
 import supabaseAdmin from '../api/utils/_supabaseClient'
 import ArticleLikes from '../../components/like'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import router from 'next/router'
 import chineseConverter from '../../utils/cnconverter'
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import { Article } from '../../utils/types'
 import Image from 'next/image'
 import { TrustedMarkdown } from '../../components/markdown'
+import post from '../../utils/api'
 
 type ArtProps = {
     art: Article
@@ -25,6 +26,9 @@ const Art = ({ art, user, url }: ArtProps) => {
     const convert = () => {
         setIsSimp(isSimp => !isSimp)
     }
+    useEffect(() => {
+        post('/api/viewArt', { artId: art.id })
+    }, [art.id])
 
     return (
         <Layout title={art.title} description={md} cover={art.cover}>
@@ -68,7 +72,8 @@ const Art = ({ art, user, url }: ArtProps) => {
                 fontWeight: 'bold'
             }}>
                 作者： {art.author}<br></br>
-                日期： {new Date(art.time).toLocaleDateString()}
+                日期： {new Date(art.time).toLocaleDateString()}<br></br>
+                阅读量：{art.views} 次
             </Typography>
 
             {

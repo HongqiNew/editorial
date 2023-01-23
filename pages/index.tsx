@@ -33,9 +33,12 @@ const Home = ({ arts, pinnedArts, page, pageCount }: HomeProps) => {
                 }
             </Slider>
             <br></br>
+
             <Divider sx={{ opacity: 0.5 }}></Divider>
             <br></br>
+            
             <Articles arts={arts}></Articles>
+            <br></br>
 
             <Pagination
                 sx={{ display: 'flex', justifyContent: 'center' }}

@@ -5,6 +5,7 @@ export type Article = {
     author: string
     md: string
     pin: boolean
+    views: number
     cover?: string
     download?: string
     tags?: string[]
