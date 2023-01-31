@@ -21,7 +21,7 @@ const Search = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 0, 1, 1),
+        padding: theme.spacing(1, 0, 1, 2),
         transition: theme.transitions.create('width'),
         width: '100%',
     },

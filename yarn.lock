@@ -1060,6 +1060,13 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@fireworks-js/react@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@fireworks-js/react/-/react-2.10.1.tgz#74b4624d3100592d4e567d94106ef632f24f203e"
+  integrity sha512-6FayZiI4tq4w9RPlC3lktMDlrjQoopl0A9ND2i6dtBBBn22rP4e8pqVrySVZ8eRZZSqmH1SB/w6Oc9kdiqM8ig==
+  dependencies:
+    fireworks-js "2.10.1"
+
 "@fontsource/roboto@^4.5.7":
   version "4.5.8"
   resolved "https://registry.npmjs.org/@fontsource/roboto/-/roboto-4.5.8.tgz"
@@ -2954,6 +2961,11 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+fireworks-js@2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/fireworks-js/-/fireworks-js-2.10.1.tgz#3b3cb653843ed39a2999d936f3fc88ced9e38e01"
+  integrity sha512-D0Hr5uSo+TD326jUHBWhf/AtP+x+NmHPmvJ3fKPDXzKGKP47ASfbk9U4JQugK4jwlKn1fdZ8kkk0CFqmva3BBw==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/flat-cache/-/flat-cache-3.0.4.tgz"
@@ -3990,6 +4002,11 @@ markdown-it@^13.0.1:
     linkify-it "^4.0.1"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
+
+mdi-material-ui@^7.6.0:
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/mdi-material-ui/-/mdi-material-ui-7.6.0.tgz#bf166c9eab5b5e5abbf38edee1650674ad2f5660"
+  integrity sha512-daqyXS2tVPB9AulKee4LOwf6llx/eiA969HFx0rOGEC2Cgup/nAmHWnN7yYtndhXpvd2cXwov5kjw40HxjjjZg==
 
 mdurl@^1.0.1:
   version "1.0.1"

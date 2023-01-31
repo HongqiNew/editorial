@@ -2,7 +2,7 @@ import { IconButton } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import LocalAtmIcon from '@mui/icons-material/LocalAtm'
+import MastodonIcon from 'mdi-material-ui/Mastodon'
 import Image from 'next/image'
 import Logo from './logo.png'
 import CC from './cc.png'
@@ -41,6 +41,9 @@ const LayoutFooter = () => {
                     </IconButton>
                     <IconButton target='_blank' rel='noreferrer' href='https://twitter.com/newhongqi'>
                         <TwitterIcon></TwitterIcon>
+                    </IconButton>
+                    <IconButton target='_blank' rel='me' href='https://newsie.social/@newhongqi' >
+                        <MastodonIcon></MastodonIcon>
                     </IconButton>
                     <IconButton target='_blank' rel='noreferrer' href='https://t.me/NewHongqi' >
                         <TelegramIcon></TelegramIcon>
