@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -8,6 +8,7 @@ import Logo from './logo.png'
 import CC from './cc.png'
 import Link from 'next/link'
 import Grid from '@mui/material/Grid'
+import { age, isAnniversary } from '../utils/anniversary'
 
 const LayoutFooter = () => {
     const gridItemProps = {
@@ -32,6 +33,11 @@ const LayoutFooter = () => {
                 </Grid>
 
                 <Grid {...gridItemProps}>
+                    <Typography fontStyle='italic' sx={{
+                        fontFamily: 'comic sans ms',
+                        color: 'darkred',
+                        mr: 1,
+                    }}>{isAnniversary ? `${age}-year-old` : ''}</Typography>
                     <Image alt='logo' src={Logo} height={25} width={60}></Image>
                 </Grid>
 

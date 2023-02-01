@@ -1,4 +1,5 @@
 import { Box, CssBaseline, Toolbar } from '@mui/material'
+import { use100vh } from 'react-div-100vh'
 import LayoutFooter from './footer'
 import LayoutHead from './head'
 
@@ -11,6 +12,8 @@ type LayoutProps = {
 }
 
 const Layout = ({ children, title, description, cover, noPadding }: LayoutProps) => {
+    const height = use100vh()
+    const minHeight = height ? height - 78 : 'calc(100vh - 78px)'
     return (
         <>
             <LayoutHead title={title} description={description} cover={cover}></LayoutHead>
@@ -23,13 +26,13 @@ const Layout = ({ children, title, description, cover, noPadding }: LayoutProps)
                     component='main'
                     sx={{
                         width: '100%',
-                        minHeight: 'calc(100vh - 78px)',
+                        minHeight,
                         pl: noPadding ? {} : { xs: '12%', sm: '18%', md: '20%' },
                         pr: noPadding ? {} : { xs: '12%', sm: '18%', md: '20%' }
                     }}
                 >
                     <Box sx={{
-                        minHeight: 'calc(100vh - 78px)'
+                        minHeight
                     }}>
                         <Toolbar></Toolbar>
                         <br></br>
