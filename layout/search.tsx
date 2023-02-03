@@ -8,9 +8,9 @@ const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     display: 'flex',
     borderRadius: 100,
-    backgroundColor: 'rgba(230,130,140,0.7)',
+    backgroundColor: 'rgba(241,204,215,0.7)',
     '&:hover': {
-        backgroundColor: 'rgba(230,130,140,0.8)',
+        backgroundColor: 'rgba(241,204,215,0.8)',
     },
     marginRight: theme.spacing(2),
     maxWidth: '50%',

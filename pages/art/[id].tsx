@@ -42,7 +42,7 @@ const Art = ({ art, user, url, useTradAsDefault }: ArtProps) => {
                 position: 'fixed',
                 bottom: 15,
                 right: 15,
-                opacity: 0.7,
+                opacity: 0.8,
             }}>
                 <ChangeCircleIcon />
                 {isSimp ? '简➢繁' : '繁➣简'}

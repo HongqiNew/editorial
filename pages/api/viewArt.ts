@@ -5,7 +5,7 @@ const viewArt = async (req: NextApiRequest, res: NextApiResponse) => {
     const { artId } = req.body
     const { error } = await supabaseAdmin
         .rpc('view_art', { row_id: artId })
-    res.status(Boolean(error) ? 500 : 200).json({ success: Boolean(error) })
+    res.status(error ? 500 : 200).json({ success: !error })
 }
 
 export default viewArt

@@ -15,7 +15,6 @@ const loadComments = async (req: NextApiRequest, res: NextApiResponse) => {
         .order('created_at')
 
     if (error) {
-        console.error(error)
         res.status(500).json({ success: false })
     }
     else {
