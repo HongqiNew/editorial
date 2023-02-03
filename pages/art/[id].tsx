@@ -13,17 +13,23 @@ import { Article } from '../../utils/types'
 import Image from 'next/image'
 import { TrustedMarkdown } from '../../components/markdown'
 import post from '../../utils/api'
+import { getCookie, setCookie } from 'cookies-next'
 
 type ArtProps = {
     art: Article
     user: Claims | null
     url: string
+    useTradAsDefault: boolean
 }
 
-const Art = ({ art, user, url }: ArtProps) => {
+const USE_TRAD_KEY = 'use_trad_as_default'
+
+const Art = ({ art, user, url, useTradAsDefault }: ArtProps) => {
     const md = art.md
-    const [isSimp, setIsSimp] = useState(true)
+    const [isSimp, setIsSimp] = useState(!useTradAsDefault)
+    console.log(isSimp)
     const convert = () => {
+        setCookie(USE_TRAD_KEY, isSimp, { expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)) })
         setIsSimp(isSimp => !isSimp)
     }
     useEffect(() => {
@@ -32,10 +38,10 @@ const Art = ({ art, user, url }: ArtProps) => {
 
     return (
         <Layout title={art.title} description={md} cover={art.cover}>
-            <Fab onClick={convert} variant='extended' sx={{
+            <Fab onClick={convert} color='info' variant='extended' sx={{
                 position: 'fixed',
-                top: '85px',
-                right: '10px',
+                bottom: 15,
+                right: 15,
                 opacity: 0.7,
             }}>
                 <ChangeCircleIcon />
@@ -114,11 +120,13 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         .eq('id', id)
         .single())
         .data
+    const useTradAsDefault = getCookie(USE_TRAD_KEY, { req: ctx.req, res: ctx.res }) ?? false
     return art ? {
         props: {
             art,
             user: getSession(ctx.req, ctx.res)?.user ?? null, // undefined 不可序列化
-            url: `https://${ctx.req.headers.host}${ctx.resolvedUrl}`
+            url: `https://${ctx.req.headers.host}${ctx.resolvedUrl}`,
+            useTradAsDefault
         }
     }
         : {

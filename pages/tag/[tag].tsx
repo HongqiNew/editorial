@@ -4,12 +4,12 @@ import Articles from '../../components/articles'
 import Layout from '../../layout'
 import { Article } from '../../utils/types'
 
-type ArtProps = {
+type TagProps = {
     arts: Article[]
     tag: string
 }
 
-const Art = ({ arts, tag }: ArtProps) => {
+const Tag = ({ arts, tag }: TagProps) => {
     return (
         <Layout title={`标签 ${tag}`} description={arts.map(article => article.title).join('\n')}>
                 <Articles arts={arts} />
@@ -32,4 +32,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
 }
 
-export default Art
+export default Tag

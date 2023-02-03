@@ -46,7 +46,7 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
         >
             <Toolbar>
                 <Box sx={{ flexGrow: 0.15 }} />
-                <IconButton sx={{ mr: 2 }} onClick={() => router.back()}>
+                <IconButton color='primary' sx={{ mr: 2 }} onClick={() => router.back()}>
                     <WestIcon></WestIcon>
                 </IconButton>
                 <Link href='/' style={{
@@ -73,10 +73,11 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
 
                 <LayoutSearch></LayoutSearch>
                 <Categories sx={{ display: { md: 'none' }, }} items={categoriesMd}></Categories>
-                <IconButton onClick={toggle}>
+                <IconButton color='primary' onClick={toggle}>
                     {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
                 <IconButton
+                    color='primary'
                     onClick={user ? () => router.push('/api/auth/logout') : () => router.push('/api/auth/login')}
                 >
                     {

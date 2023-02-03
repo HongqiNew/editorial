@@ -8,9 +8,9 @@ const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     display: 'flex',
     borderRadius: 100,
-    backgroundColor: 'rgba(200,200,200,0.6)',
+    backgroundColor: 'rgba(230,130,140,0.7)',
     '&:hover': {
-        backgroundColor: 'rgba(200,200,200,0.7)',
+        backgroundColor: 'rgba(230,130,140,0.8)',
     },
     marginRight: theme.spacing(2),
     maxWidth: '50%',
@@ -24,6 +24,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         padding: theme.spacing(1, 0, 1, 2),
         transition: theme.transitions.create('width'),
         width: '100%',
+        color: 'darkred'
     },
 }))
 
@@ -45,7 +46,7 @@ const LayoutSearch = () => {
                 onKeyUp={handleKeyUp}
                 inputProps={{ 'aria-label': 'search' }}
             />
-            <IconButton sx={{
+            <IconButton color='primary' sx={{
                 m: '0 0.5px 0 1px'
             }} rel='noreferrer' target='_blank' href={`https://www.google.com/search?q=site:newhongqi.org ${value}`}>
                 <SearchIcon />

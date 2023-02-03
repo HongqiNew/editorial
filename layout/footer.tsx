@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import MastodonIcon from 'mdi-material-ui/Mastodon'
 import Image from 'next/image'
 import Logo from './logo.png'
-import CC from './cc.png'
+import CCIcon from 'mdi-material-ui/ClosedCaption'
 import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import { age, isAnniversary } from '../utils/anniversary'
@@ -27,9 +27,16 @@ const LayoutFooter = () => {
                 p: '10px 0px',
                 minHeight: 76,
             }}>
-                <Grid {...gridItemProps} >
-                    <Link href='/art/47' style={{ textDecorationLine: 'underline', marginRight: 3 }}>About</Link>|&nbsp;
-                    <Link target='_blank' rel='noreferrer' href='https://creativecommons.org/licenses/by-sa/4.0/'><Image alt='CC' src={CC} style={{ marginTop: 8 }}></Image></Link>
+                <Grid {...gridItemProps} color='primary'>
+                    <Typography color='primary' sx={{
+                        fontFamily: 'comic sans ms',
+                        mr: 1
+                    }}>
+                        <Link href='/art/47' style={{ textDecorationLine: 'underline' }}>About</Link>
+                        ｜
+                        <Link target='_blank' rel='noreferrer' href='https://creativecommons.org/licenses/by-sa/4.0/' style={{ textDecorationLine: 'underline' }}>CC BY-SA 4.0</Link>
+                    </Typography>
+                    <CCIcon color='primary'></CCIcon>
                 </Grid>
 
                 <Grid {...gridItemProps}>
@@ -42,16 +49,16 @@ const LayoutFooter = () => {
                 </Grid>
 
                 <Grid {...gridItemProps}>
-                    <IconButton target='_blank' rel='noreferrer' href='https://github.com/HongqiNew/'>
+                    <IconButton color='primary' target='_blank' rel='noreferrer' href='https://github.com/HongqiNew/'>
                         <GitHubIcon></GitHubIcon>
                     </IconButton>
-                    <IconButton target='_blank' rel='noreferrer' href='https://twitter.com/newhongqi'>
+                    <IconButton color='primary' target='_blank' rel='noreferrer' href='https://twitter.com/newhongqi'>
                         <TwitterIcon></TwitterIcon>
                     </IconButton>
-                    <IconButton target='_blank' rel='me' href='https://newsie.social/@newhongqi' >
+                    <IconButton color='primary' target='_blank' rel='me' href='https://newsie.social/@newhongqi' >
                         <MastodonIcon></MastodonIcon>
                     </IconButton>
-                    <IconButton target='_blank' rel='noreferrer' href='https://t.me/NewHongqi' >
+                    <IconButton color='primary' target='_blank' rel='noreferrer' href='https://t.me/NewHongqi' >
                         <TelegramIcon></TelegramIcon>
                     </IconButton>
                 </Grid>

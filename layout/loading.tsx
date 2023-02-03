@@ -10,7 +10,7 @@ const LayoutLoading = () => {
         router.events.on('routeChangeError', () => setIsLoading(false))
     }, [])
     return (
-        <Box sx={{ position: 'fixed', width: '100%' }}>
+        <Box sx={{ position: 'fixed', width: '100%', zIndex: 2 }}>
             <LinearProgress sx={{ display: isLoading ? undefined : 'none' }} color='primary' />
             <br></br>
         </Box>

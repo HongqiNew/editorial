@@ -22,6 +22,7 @@
     "@types/markdown-it": "^12.2.3",
     "@types/opencc-js": "^1.0.0",
     "auth0": "^2.42.0",
+    "cookies-next": "^2.1.1",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.4",
     "markdown-it-block-image": "^0.0.3",
