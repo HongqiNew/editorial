@@ -34,7 +34,7 @@ function App({ Component, pageProps }: AppProps) {
       palette: {
         mode,
         primary: {
-          main: 'rgb(200,50,25)',
+          main: mode === 'dark' ? '#f4989c' : 'rgb(200,50,25)',
           contrastText: '#000',
         },
         secondary: { main: mode === 'dark' ? grey[100] : grey[900], contrastText: mode === 'dark' ? grey[900] : grey[100] },
@@ -54,8 +54,8 @@ function App({ Component, pageProps }: AppProps) {
       <ColorModeContext.Provider value={mode ?? prefersDarkMode}>
         <ThemeProvider theme={theme}>
           <GoogleAnalytics />
-          <LayoutLoading></LayoutLoading>
           <LayoutBar toggle={colorMode.toggleColorMode}></LayoutBar>
+          <LayoutLoading></LayoutLoading>
           <Component {...pageProps} />
         </ThemeProvider>
       </ColorModeContext.Provider>

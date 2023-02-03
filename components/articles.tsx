@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Article } from '../utils/types'
 import Preview from './preview'
 

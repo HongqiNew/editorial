@@ -1,4 +1,4 @@
-import { Divider, Pagination, PaginationItem } from '@mui/material'
+import { Box, Divider, Pagination, PaginationItem } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import router from 'next/router'
 import Preview from '../components/preview'
@@ -6,6 +6,7 @@ import Articles from '../components/articles'
 import Layout from '../layout'
 import { Article } from '../utils/types'
 import supabaseAdmin from './api/utils/_supabaseClient'
+import PinIcon from 'mdi-material-ui/PinOutline'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 const Slider = require('react-slick').default
@@ -29,14 +30,22 @@ const Home = ({ arts, pinnedArts, page, pageCount }: HomeProps) => {
         <Layout title='主页'>
             <Slider {...settings}>
                 {
-                    pinnedArts.map(art => <Preview key={art.id} art={art} />)
+                    pinnedArts.map(art => (
+                        <Box key={art.id} sx={{ position: 'relative' }}>
+                            <Box sx={{ position: 'absolute', top: -3, zIndex: 1, left: '50%' }}>
+                                <PinIcon color='primary' fontSize='large' sx={{ position: 'relative', left: '-50%' }}></PinIcon>
+                            </Box>
+                            <br></br>
+                            <Preview art={art} mediaHeight={{ xs: '30vh', md: '40vh' }} />
+                        </Box>
+                    ))
                 }
             </Slider>
             <br></br>
 
             <Divider sx={{ opacity: 0.5 }}></Divider>
             <br></br>
-            
+
             <Articles arts={arts}></Articles>
             <br></br>
 

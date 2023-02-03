@@ -34,7 +34,7 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
 
     return (
         <AppBar
-            position='fixed'
+            position='sticky'
             sx={{
                 width: '100%',
                 boxShadow: 'none',

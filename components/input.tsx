@@ -1,5 +1,5 @@
 import { Alert, Snackbar, Typography, IconButton, Box, Link } from '@mui/material'
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import SendIcon from '@mui/icons-material/Send'
 import post from '../utils/api'
 import useMode from '../utils/theme'

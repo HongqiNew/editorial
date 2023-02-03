@@ -23,7 +23,7 @@ const LayoutFooter = () => {
     return (
         <footer>
             <Grid container sx={{
-                width: '100%',
+                width: '100vw',
                 p: '10px 0px',
                 minHeight: 76,
             }}>
@@ -33,9 +33,9 @@ const LayoutFooter = () => {
                 </Grid>
 
                 <Grid {...gridItemProps}>
-                    <Typography fontStyle='italic' sx={{
+                    <Typography fontStyle='italic' color='primary' sx={{
+                        display: { xs: 'none', sm: 'inline' },
                         fontFamily: 'comic sans ms',
-                        color: 'darkred',
                         mr: 1,
                     }}>{isAnniversary ? `${age}-year-old` : ''}</Typography>
                     <Image alt='logo' src={Logo} height={25} width={60}></Image>
