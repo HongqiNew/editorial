@@ -1,101 +1,131 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, useTheme } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import WestIcon from '@mui/icons-material/West';
-import MenuIcon from '@mui/icons-material/Menu';
-import Link from "next/link";
-import LayoutSearch from "./search";
-import router from "next/router";
+import { useUser } from '@auth0/nextjs-auth0'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { AppBar, Box, Button, IconButton, Switch, Toolbar } from '@mui/material'
+import React from 'react'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import WestIcon from '@mui/icons-material/West'
+import Link from 'next/link'
+import LayoutSearch from './search'
+import router from 'next/router'
+import useMode from '../utils/theme'
+import Image from 'next/image'
+import Logo from './logo.png'
+import Menu from '../components/menu'
+import Fireworks from '@fireworks-js/react'
+import { isAnniversary } from '../utils/anniversary'
 
 type LayoutBarProps = {
-    setDark: Dispatch<SetStateAction<any>>
+    toggle: () => void
 }
 
-const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺'];
+const BAR_HEIGHT = 64
+const CATEGORIES = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
+const CATEGORIES_MENU = CATEGORIES.map(category => ({ text: category, href: `/tag/${category}` }))
 
-const LayoutBar = ({ setDark }: LayoutBarProps) => {
-    const user = useUser().user;
-    const theme = useTheme();
+const LayoutBar = ({ toggle }: LayoutBarProps) => {
+    const user = useUser().user
+    const mode = useMode()
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const redirect = (tag: string) => {
-        router.push(`/tag/${tag}`)
+    const [fireworksOn, setFireworksOn] = React.useState(true)
+
+    const bgstyle = isAnniversary ? {
+        background: mode === 'dark' ? 'rgba(0, 0, 0, 0) linear-gradient(to left, rgba(236, 72, 153, 0.9), rgba(59, 130, 246, 0.9)) repeat scroll 0% 0% / auto padding-box border-box' : 'rgba(0, 0, 0, 0) linear-gradient(to right bottom, rgba(252, 165, 165, 0.9), rgba(253, 186, 116, 0.9)) repeat scroll 0% 0% / auto padding-box border-box'
+    } : {
+        bgcolor: mode === 'dark' ? 'rgba(28,28,28,0.9)' : 'rgba(255,255,255,0.9)'
     }
-    const Menu = () => (
-        <Box
-            sx={{ width: 'auto' }}
-            role="presentation"
-            onClick={toggle}
-        >
-            <List>
-                {categories.map(text => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton onClick={() => redirect(text)}>
-                            <ListItemText primary={text} sx={{ textAlign: 'center' }} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    )
-
-    const toggle = () => {
-        setIsMenuOpen(open => !open);
-    }
-
     return (
         <AppBar
-            position='fixed'
+            position='sticky'
             sx={{
                 width: '100%',
-                backdropFilter: 'blur(2px)'
+                boxShadow: 'none',
+                height: BAR_HEIGHT,
+                backdropFilter: 'blur(50px)',
+                ...bgstyle
             }}
             color='transparent'
         >
             <Toolbar>
-                <IconButton sx={{ mr: 2 }} onClick={() => router.back()}>
-                    <WestIcon htmlColor='pink'></WestIcon>
+                <Box sx={{ flexGrow: 0.15 }} />
+                <IconButton color='primary' sx={{ mr: 2 }} onClick={() => router.back()}>
+                    <WestIcon></WestIcon>
                 </IconButton>
-                <Link href='/'>
-                    <img width={80} height={30} alt='《新红旗》缩小 Logo' style={{
-                        minHeight: 30,
-                        width: 'auto',
-                    }} src='/imgs/smalllogo.webp'></img>
+                <Link href='/' style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}>
+                    <Image width={73} height={28} quality={100} alt='logo' src={Logo}></Image>
                 </Link>
-                <Box sx={{ flexGrow: 1 }} />
+                <Box sx={{ flexGrow: 0.25 }}></Box>
+
+                <Box sx={{ flexGrow: 0.4, display: { xs: 'none', md: 'flex' } }}>
+                    {CATEGORIES.map((category) => (
+                        <Button
+                            size='large'
+                            key={category}
+                            onClick={() => { router.push(`/tag/${category}`) }}
+                            sx={{ display: 'block', fontWeight: 'bold' }}
+                            color='secondary'
+                        >
+                            {category}
+                        </Button>
+                    ))}
+                </Box>
+
                 <LayoutSearch></LayoutSearch>
-                <IconButton onClick={toggle}>
-                    <MenuIcon htmlColor='pink' />
-                </IconButton>
-                <IconButton onClick={() => { setDark((value: any) => !Boolean(value)) }}>
-                    {theme.palette.mode === 'dark' ? <Brightness7Icon htmlColor='pink' /> : <Brightness4Icon htmlColor='pink' />}
+                {
+                    isAnniversary
+                        ?
+                        <Switch
+                            checked={fireworksOn}
+                            onChange={event => {
+                                setFireworksOn(event.target.checked)
+                            }}
+                        ></Switch>
+                        :
+                        <></>
+                }
+                <Menu sx={{ display: { md: 'none' }, }} items={CATEGORIES_MENU}></Menu>
+                <IconButton color='primary' onClick={toggle}>
+                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
                 <IconButton
-                    size='large'
+                    color='primary'
                     onClick={user ? () => router.push('/api/auth/logout') : () => router.push('/api/auth/login')}
                 >
                     {
                         user
                             ?
-                            <img src={user.picture as string} style={{
+                            <Image width={24} height={24} src={user.picture as string} alt='avatar' style={{
                                 borderRadius: 50,
-                                maxHeight: 48,
+                                maxHeight: 24,
                                 width: 'auto'
-                            }}></img>
+                            }}></Image>
                             :
-                            <AccountCircleIcon htmlColor='pink' />
+                            <AccountCircleIcon />
                     }
                 </IconButton>
+                <Box sx={{ flexGrow: 0.2 }} />
             </Toolbar>
 
-            <Drawer open={isMenuOpen} onClose={toggle} anchor='top'>
-                <Menu />
-            </Drawer>
+            {
+                isAnniversary && fireworksOn
+                    ?
+                    <Fireworks
+                        style={{
+                            width: '100%',
+                            height: BAR_HEIGHT,
+                            top: 0,
+                            position: 'fixed',
+                            pointerEvents: 'none'
+                        }}
+                    />
+                    :
+                    <></>
+            }
         </AppBar>
-    );
+    )
 }
 
-export default LayoutBar;
+export default LayoutBar
