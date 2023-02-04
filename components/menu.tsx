@@ -9,7 +9,7 @@ type MenuProps = {
     sx?: SxProps<Theme>
 }
 
-const Categories = ({ items, sx }: MenuProps) => {
+const Menu = ({ items, sx }: MenuProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,7 +20,7 @@ const Categories = ({ items, sx }: MenuProps) => {
     }
     return (
         <>
-            <IconButton onClick={handleClick} sx={sx}>
+            <IconButton onClick={handleClick} sx={sx} color='primary'>
                 <MenuIcon></MenuIcon>
             </IconButton>
             <MaterialMenu
@@ -58,4 +58,4 @@ const Categories = ({ items, sx }: MenuProps) => {
     )
 }
 
-export default Categories
+export default Menu

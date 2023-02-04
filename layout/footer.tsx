@@ -29,20 +29,20 @@ const LayoutFooter = () => {
             }}>
                 <Grid {...gridItemProps} color='primary'>
                     <Typography color='primary' sx={{
-                        fontFamily: 'comic sans ms',
-                        mr: 1
+                        fontFamily: '"comic sans ms", "Garamond", monospace',
+                        whiteSpace: 'nowrap',
                     }}>
-                        <Link href='/art/47' style={{ textDecorationLine: 'underline' }}>About</Link>
-                        ｜
-                        <Link target='_blank' rel='noreferrer' href='https://creativecommons.org/licenses/by-sa/4.0/' style={{ textDecorationLine: 'underline' }}>CC BY-SA 4.0</Link>
+                        CC BY-SA 4.0
                     </Typography>
-                    <CCIcon color='primary'></CCIcon>
+                    <IconButton color='primary' target='_blank' rel='noreferrer' href='https://creativecommons.org/licenses/by-sa/4.0/' >
+                        <CCIcon></CCIcon>
+                    </IconButton>
                 </Grid>
 
                 <Grid {...gridItemProps}>
                     <Typography fontStyle='italic' color='primary' sx={{
                         display: { xs: 'none', sm: 'inline' },
-                        fontFamily: 'comic sans ms',
+                        fontFamily: '"comic sans ms", "Garamond", monospace',
                         mr: 1,
                     }}>{isAnniversary ? `${age}-year-old` : ''}</Typography>
                     <Image alt='logo' src={Logo} height={25} width={60}></Image>

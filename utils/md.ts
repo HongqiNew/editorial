@@ -30,7 +30,7 @@ export const routerifyMarkdownLinks = () => {
 // 标记 ID，方便识别并执行
 const MarkdownItScript = (tokens: Token[], idx: number) => {
     if (tokens[idx].content.startsWith('<script>')) {
-        tokens[idx].content.replace('<script>', "<script id='Markdown Script'>")
+        tokens[idx].content.replace('<script>', '<script id="Markdown Script">')
     }
 }
 

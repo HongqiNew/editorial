@@ -12,8 +12,8 @@ type LayoutProps = {
 }
 
 const Layout = ({ children, title, description, cover, noPadding }: LayoutProps) => {
-    const height = use100vh()
-    const minHeight = height ? height - 78 : 'calc(100vh - 78px)'
+    const vh = use100vh()
+    const minHeight = vh ? vh - 140 : 'calc(100vh - 140px)'
     return (
         <Box sx={{ overflowX: 'hidden' }}>
             <LayoutHead title={title} description={description} cover={cover}></LayoutHead>

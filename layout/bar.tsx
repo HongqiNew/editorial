@@ -1,6 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material'
+import { AppBar, Box, Button, IconButton, Switch, Toolbar } from '@mui/material'
 import React from 'react'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -11,7 +11,7 @@ import router from 'next/router'
 import useMode from '../utils/theme'
 import Image from 'next/image'
 import Logo from './logo.png'
-import Categories from '../components/categories'
+import Menu from '../components/menu'
 import Fireworks from '@fireworks-js/react'
 import { isAnniversary } from '../utils/anniversary'
 
@@ -19,26 +19,28 @@ type LayoutBarProps = {
     toggle: () => void
 }
 
-const categories = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
-const categoriesMd = categories.map(category => ({ text: category, href: `/tag/${category}` }))
+const BAR_HEIGHT = 64
+const CATEGORIES = ['时事', '思想', '杂谈', '历史', '论坛', '文艺']
+const CATEGORIES_MENU = CATEGORIES.map(category => ({ text: category, href: `/tag/${category}` }))
 
 const LayoutBar = ({ toggle }: LayoutBarProps) => {
     const user = useUser().user
     const mode = useMode()
+
+    const [fireworksOn, setFireworksOn] = React.useState(true)
 
     const bgstyle = isAnniversary ? {
         background: mode === 'dark' ? 'rgba(0, 0, 0, 0) linear-gradient(to left, rgba(236, 72, 153, 0.9), rgba(59, 130, 246, 0.9)) repeat scroll 0% 0% / auto padding-box border-box' : 'rgba(0, 0, 0, 0) linear-gradient(to right bottom, rgba(252, 165, 165, 0.9), rgba(253, 186, 116, 0.9)) repeat scroll 0% 0% / auto padding-box border-box'
     } : {
         bgcolor: mode === 'dark' ? 'rgba(28,28,28,0.9)' : 'rgba(255,255,255,0.9)'
     }
-
     return (
         <AppBar
             position='sticky'
             sx={{
                 width: '100%',
                 boxShadow: 'none',
-                height: 64,
+                height: BAR_HEIGHT,
                 backdropFilter: 'blur(50px)',
                 ...bgstyle
             }}
@@ -58,7 +60,7 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
                 <Box sx={{ flexGrow: 0.25 }}></Box>
 
                 <Box sx={{ flexGrow: 0.4, display: { xs: 'none', md: 'flex' } }}>
-                    {categories.map((category) => (
+                    {CATEGORIES.map((category) => (
                         <Button
                             size='large'
                             key={category}
@@ -72,7 +74,19 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
                 </Box>
 
                 <LayoutSearch></LayoutSearch>
-                <Categories sx={{ display: { md: 'none' }, }} items={categoriesMd}></Categories>
+                {
+                    isAnniversary
+                        ?
+                        <Switch
+                            checked={fireworksOn}
+                            onChange={event => {
+                                setFireworksOn(event.target.checked)
+                            }}
+                        ></Switch>
+                        :
+                        <></>
+                }
+                <Menu sx={{ display: { md: 'none' }, }} items={CATEGORIES_MENU}></Menu>
                 <IconButton color='primary' onClick={toggle}>
                     {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
@@ -96,12 +110,13 @@ const LayoutBar = ({ toggle }: LayoutBarProps) => {
             </Toolbar>
 
             {
-                isAnniversary
+                isAnniversary && fireworksOn
                     ?
                     <Fireworks
                         style={{
                             width: '100%',
-                            height: '100%',
+                            height: BAR_HEIGHT,
+                            top: 0,
                             position: 'fixed',
                             pointerEvents: 'none'
                         }}

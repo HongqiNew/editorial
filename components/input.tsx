@@ -59,20 +59,21 @@ const CommentInput = (props: CommentInputProps) => {
                     backgroundColor: mode === 'dark' ? 'rgb(28,28,28)' : 'white',
                     width: '100%',
                     borderRadius: 6,
-                    p: '5px 5px 5px 5px'
+                    p: 1.5
                 }}
             >
                 <TextareaAutosize
                     style={{
                         backgroundColor: 'transparent',
+                        color: mode === 'dark' ? 'white' : 'black',
                         width: '100%',
                         resize: 'none',
                         fontSize: 15,
                         border: 'none',
                         outline: 'none',
                     }}
-                    minRows={6}
-                    maxRows={30}
+                    minRows={5}
+                    maxRows={15}
                     placeholder={props.placeholder}
                     value={props.value}
                     onChange={handleChange}
