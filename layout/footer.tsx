@@ -1,6 +1,7 @@
 import { IconButton, Typography } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import TelegramIcon from '@mui/icons-material/Telegram'
+import PublicIcon from '@mui/icons-material/Public'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import MastodonIcon from 'mdi-material-ui/Mastodon'
 import Image from 'next/image'
@@ -49,6 +50,9 @@ const LayoutFooter = () => {
                 </Grid>
 
                 <Grid {...gridItemProps}>
+                    <IconButton color='primary' title='新红旗—球事论坛' target='_blank' href='https://internationalcommunism.com/list/?author=%E6%96%B0%E7%BA%A2%E6%97%97'>
+                        <PublicIcon></PublicIcon>
+                    </IconButton>
                     <IconButton color='primary' target='_blank' rel='noreferrer' href='https://github.com/HongqiNew/'>
                         <GitHubIcon></GitHubIcon>
                     </IconButton>
